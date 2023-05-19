@@ -1,0 +1,143 @@
+{
+  "id": "vnexpress",
+  "home": "https://vnexpress.net/",
+  "pages": [
+    {
+      "name": "list",
+      "patterns": [
+        "^https://vnexpress.net/?$",
+        "^https://vnexpress.net/[a-z-]+$"
+      ],
+      "example": "https://vnexpress.net",
+      "parser": {
+        "transforms": [
+          {
+            "func": "html_node"
+          },
+          {
+            "func": "html_select_all",
+            "params": {
+              "selector": ".item-news"
+            }
+          },
+          {
+            "func": "map",
+            "params": {
+              "func": "pick",
+              "params": {
+                "fields": {
+                  "title": [
+                    {
+                      "func": "html_select",
+                      "params": {
+                        "selector": "h3.title-news a@title"
+                      }
+                    }
+                  ],
+                  "url": [
+                    {
+                      "func": "html_select",
+                      "params": {
+                        "selector": "h3.title-news a@href"
+                      }
+                    },
+                    {
+                      "func": "url"
+                    }
+                  ],
+                  "summary": [
+                    {
+                      "func": "html_select",
+                      "params": {
+                        "selector": ".description a@text"
+                      }
+                    }
+                  ],
+                  "image": [
+                    {
+                      "func": "||",
+                      "params": {
+                        "items": [
+                          {
+                            "func": "html_select",
+                            "params": {
+                              "selector": "[itemprop=contentUrl]@data-src"
+                            }
+                          },
+                          {
+                            "func": "html_select",
+                            "params": {
+                              "selector": "[itemprop=contentUrl]@src"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "func": "filter",
+            "params": {
+              "func": "!=",
+              "params": {
+                "exp1": "${value.title}",
+                "exp2": ""
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "view",
+      "patterns": [
+        "^https://vnexpress.net/.+-[\\d]+.html$"
+      ],
+      "parser": {
+        "transforms": [
+          {
+            "func": "html_node"
+          },
+          {
+            "func": "html_fix_preload_image"
+          },
+          {
+            "func": "pick",
+            "params": {
+              "fields": {
+                "title": [
+                  {
+                    "func": "html_select",
+                    "params": {
+                      "selector": "h1.title-detail@text"
+                    }
+                  }
+                ],
+                "summary": [
+                  {
+                    "func": "html_select",
+                    "params": {
+                      "selector": ".description@html"
+                    }
+                  }
+                ],
+                "content": [
+                  {
+                    "func": "html_select",
+                    "params": {
+                      "selector": ".fck_detail@html"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "example": "https://vnexpress.net/nha-o-xa-hoi-chiec-phao-cua-doanh-nghiep-bat-dong-san-4589120.html"
+    }
+  ]
+}

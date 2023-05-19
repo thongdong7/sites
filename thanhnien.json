@@ -1,0 +1,118 @@
+{
+  "id": "thanhnien",
+  "home": "https://thanhnien.vn",
+  "pages": [
+    {
+      "name": "list",
+      "patterns": [
+        "^https://thanhnien.vn$",
+        "^https://thanhnien.vn/[a-z-]+.htm$"
+      ],
+      "example": "https://thanhnien.vn",
+      "parser": {
+        "transforms": [
+          {
+            "func": "html_node"
+          },
+          {
+            "func": "html_select_all",
+            "params": {
+              "selector": ".item-first,.item-related .box-category-item,.box-category-sub .box-category-item,.box-category-middle .box-category-item"
+            }
+          },
+          {
+            "func": "map",
+            "params": {
+              "func": "pick",
+              "params": {
+                "fields": {
+                  "title": [
+                    {
+                      "func": "html_select",
+                      "params": {
+                        "selector": "a@title"
+                      }
+                    }
+                  ],
+                  "url": [
+                    {
+                      "func": "html_select",
+                      "params": {
+                        "selector": "a@href"
+                      }
+                    },
+                    {
+                      "func": "url"
+                    }
+                  ],
+                  "summary": [
+                    {
+                      "func": "html_select",
+                      "params": {
+                        "selector": ".box-category-sapo@text"
+                      }
+                    }
+                  ],
+                  "image": [
+                    {
+                      "func": "html_select",
+                      "params": {
+                        "selector": ".box-category-avatar@src"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "uniq_by_field(field=url)"
+        ]
+      }
+    },
+    {
+      "name": "view",
+      "patterns": [
+        "^https://thanhnien.vn/.+-[\\d]+.htm$"
+      ],
+      "parser": {
+        "transforms": [
+          {
+            "func": "html_node"
+          },
+          {
+            "func": "pick",
+            "params": {
+              "fields": {
+                "title": [
+                  {
+                    "func": "html_select",
+                    "params": {
+                      "selector": "[data-role=title]@text"
+                    }
+                  }
+                ],
+                "summary": [
+                  {
+                    "func": "html_select",
+                    "params": {
+                      "selector": ".detail-sapo@text"
+                    }
+                  }
+                ],
+                "content": [
+                  {
+                    "func": "html_select",
+                    "params": {
+                      "selector": "div.detail-cmain@html"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "example": "https://thanhnien.vn/sinh-vien-viet-nam-tai-han-quoc-chu-trong-nghien-cuu-khoa-hoc-185230415152639264.htm"
+    }
+  ]
+}

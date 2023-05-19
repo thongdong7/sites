@@ -1,0 +1,126 @@
+{
+  "id": "tuoitre",
+  "home": "https://tuoitre.vn",
+  "pages": [
+    {
+      "name": "list",
+      "patterns": [
+        "^https://tuoitre.vn/?$",
+        "^https://tuoitre.vn/[a-z-]+.htm$"
+      ],
+      "example": "https://tuoitre.vn",
+      "parser": {
+        "transforms": [
+          {
+            "func": "html_node"
+          },
+          {
+            "func": "html_select_all",
+            "params": {
+              "selector": ".item-first,.item-related .box-category-item,.box-category-sub .box-category-item,.box-category-middle .box-category-item"
+            }
+          },
+          {
+            "func": "map",
+            "params": {
+              "func": "pick",
+              "params": {
+                "fields": {
+                  "title": [
+                    {
+                      "func": "html_select",
+                      "params": {
+                        "selector": "a@title"
+                      }
+                    }
+                  ],
+                  "url": [
+                    {
+                      "func": "html_select",
+                      "params": {
+                        "selector": "a@href"
+                      }
+                    },
+                    {
+                      "func": "url"
+                    }
+                  ],
+                  "summary": [
+                    {
+                      "func": "html_select",
+                      "params": {
+                        "selector": ".box-category-sapo@text"
+                      }
+                    }
+                  ],
+                  "image": [
+                    {
+                      "func": "html_select",
+                      "params": {
+                        "selector": ".box-category-avatar@src"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "func": "uniq_by_field",
+            "params": {
+              "field": "url"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "view",
+      "patterns": [
+        "^https://tuoitre.vn/.+-[\\d]+.htm$"
+      ],
+      "parser": {
+        "transforms": [
+          {
+            "func": "html_node"
+          },
+          {
+            "func": "debug"
+          },
+          {
+            "func": "pick",
+            "params": {
+              "fields": {
+                "title": [
+                  {
+                    "func": "html_select",
+                    "params": {
+                      "selector": "[data-role=title]@text"
+                    }
+                  }
+                ],
+                "summary": [
+                  {
+                    "func": "html_select",
+                    "params": {
+                      "selector": ".detail-sapo@text"
+                    }
+                  }
+                ],
+                "content": [
+                  {
+                    "func": "html_select",
+                    "params": {
+                      "selector": "div.detail-cmain@html"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "example": "https://tuoitre.vn/bo-tai-chinh-phai-trinh-de-xuat-giam-2-vat-truoc-ngay-25-4-20230417192805766.htm"
+    }
+  ]
+}

@@ -4,7 +4,9 @@
   "pages": [
     {
       "name": "list",
-      "patterns": ["^https://tinhte.vn/?$"],
+      "patterns": [
+        "^https://tinhte.vn/?$"
+      ],
       "example": "https://tinhte.vn",
       "parser": {
         "script": {
@@ -34,9 +36,15 @@
               "func": "pick",
               "params": {
                 "fields": {
-                  "title": ["get(path=value.thread_title)"],
-                  "url": ["get(path=value.links.permalink)"],
-                  "image": ["get(path=value.thread_image.link)"],
+                  "title": [
+                    "get(path=value.thread_title)"
+                  ],
+                  "url": [
+                    "get(path=value.links.permalink)"
+                  ],
+                  "image": [
+                    "get(path=value.thread_image.link)"
+                  ],
                   "created_at": [
                     "get(path=value.thread_create_date)",
                     "date1000"
@@ -64,7 +72,9 @@
     },
     {
       "name": "view",
-      "patterns": ["^https://tinhte.vn/thread/.+\\.\\d+/$"],
+      "patterns": [
+        "^https://tinhte.vn/thread/.+\\.\\d+/?$"
+      ],
       "example": "https://tinhte.vn/thread/tren-tay-rambler-14-oz-mau-nordic-blue-ly-giu-nhiet-ban-chay-nhi-cua-yeti.3669956/",
       "parser": {
         "script": {
@@ -73,9 +83,15 @@
               "func": "pick",
               "params": {
                 "fields": {
-                  "title": ["get(path=value.thread_title)"],
-                  "url": ["get(path=value.links.permalink)"],
-                  "image": ["get(path=value.thread_image.link)"],
+                  "title": [
+                    "get(path=value.thread_title)"
+                  ],
+                  "url": [
+                    "get(path=value.links.permalink)"
+                  ],
+                  "image": [
+                    "get(path=value.thread_image.link)"
+                  ],
                   "content": [
                     "get(path=value.posts[0].post_body_html)",
                     "html_safe()"

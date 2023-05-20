@@ -3,7 +3,7 @@
     "home": "https://baomoi.com",
     "pages": [
         {
-            "name": "home",
+            "name": "list",
             "patterns": [
                 "^https://baomoi.com/?$"
             ],

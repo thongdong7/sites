@@ -53,6 +53,16 @@
                     {
                         "func": "map",
                         "params": "script(name=article)"
+                    },
+                    {
+                        "func": "filter",
+                        "params": {
+                            "func": "!=",
+                            "params": {
+                                "exp1": "${value.title}",
+                                "exp2": ""
+                            }
+                        }
                     }
                 ]
             }

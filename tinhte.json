@@ -99,6 +99,56 @@
                   "created_at": [
                     "get(path=value.thread_create_date)",
                     "date1000"
+                  ],
+                  "author": [
+                    {
+                      "func": "pick",
+                      "params": {
+                        "fields": {
+                          "name": [
+                            "get(path=value.creator_username)"
+                          ],
+                          "avatar": [
+                            "get(path=value.links.first_poster_avatar)"
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "comments": [
+                    "get(path=value.posts)",
+                    "slice(start=1)",
+                    {
+                      "func": "map",
+                      "params": "script(name=post_to_comment)"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "post_to_comment": [
+            {
+              "func": "pick",
+              "params": {
+                "fields": {
+                  "content": [
+                    "get(path=value.post_body_html)"
+                  ],
+                  "author": [
+                    {
+                      "func": "pick",
+                      "params": {
+                        "fields": {
+                          "name": [
+                            "get(path=value.poster_username)"
+                          ],
+                          "avatar": [
+                            "get(path=value.links.poster_avatar)"
+                          ]
+                        }
+                      }
+                    }
                   ]
                 }
               }
@@ -116,6 +166,7 @@
             "params": "==(exp1=${value._req.uri},exp2=posts)"
           },
           "get(path=value[0].thread)",
+          "log(name=cache)",
           "script(name=convert_thread)"
         ]
       }

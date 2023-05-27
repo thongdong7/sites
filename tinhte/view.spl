@@ -1,61 +1,64 @@
 page view
 patterns = [
-    "^https://tinhte.vn/thread/.+\.\d+/?$"
+  "^https://tinhte.vn/thread/.+\.\d+/?$"
 ]
 example = "https://tinhte.vn/thread/tren-tay-rambler-14-oz-mau-nordic-blue-ly-giu-nhiet-ban-chay-nhi-cua-yeti.3669956/"
+
 script convert_thread [
-  pick(fields= {
-        title= [
-          get(path="value.thread_title")
-        ],
-        url= [
-          get(path="value.links.permalink")
-        ],
-        image= [
-          get(path="value.thread_image.link")
-        ],
-        content= [
-          get(path="value.posts[0].post_body_html"),
-          html_safe()
-        ],
-        created_at= [
-          get(path="value.thread_create_date"),
-          date1000
-        ],
-        author= [
-          pick(fields= {
-                name: [
-                  get(path="value.creator_username")
-                ]
-                avatar: [
-                  get(path="value.links.first_poster_avatar")
-                ]
-              })
-        ],
-        comments: [
-          get(path="value.posts"),
-          slice(start=1),
-          map(script(name="post_to_comment"))
+  pick(fields={
+    title      = [
+      get(path="value.thread_title")
+    ]
+    url        = [
+      get(path="value.links.permalink")
+    ]
+    image      = [
+      get(path="value.thread_image.link")
+    ]
+    content    = [
+      get(path="value.posts[0].post_body_html")
+      html_safe()
+    ]
+    created_at = [
+      get(path="value.thread_create_date")
+      date1000
+    ]
+    author     = [
+      pick(fields={
+        name   = [
+          get(path="value.creator_username")
+        ]
+        avatar = [
+          get(path="value.links.first_poster_avatar")
         ]
       })
+    ]
+    comments   = [
+      get(path="value.posts")
+      slice(start="1")
+      map(script(name="post_to_comment"))
+    ]
+  })
 ]
+
 script post_to_comment [
   pick(fields={
-        content= [
-          get(path="value.post_body_html")
+    content = [
+      get(path="value.post_body_html")
+    ]
+    author  = [
+      pick(fields={
+        name   = [
+          get(path="value.poster_username")
         ]
-        author= [
-          pick(fields= {
-                name= [
-                  get(path="value.poster_username")
-                ],
-                avatar= [
-                  get(path="value.links.poster_avatar")
-                ]
-              })
+        avatar = [
+          get(path="value.links.poster_avatar")
         ]
       })
+    ]
+  })
 ]
+
 transforms [
   nextjs_data
   get(path="value.props.pageProps.apiData.jobs")

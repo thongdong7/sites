@@ -1,6 +1,6 @@
 page list
 patterns = [
-    "^https://tinhte.vn/?$"
+  "^https://tinhte.vn/?$"
 ]
 example = "https://tinhte.vn"
 
@@ -10,36 +10,34 @@ script parse_promoted [
   flatten
   map(script(name="convert_thread"))
 ]
+
 script convert_thread [
-    pick(
-        fields = {
-            title = [
-                get(path="value.thread_title")
-            ]
-            url = [
-                get(path="value.links.permalink")
-            ]
-            image = [
-                get(path="value.thread_image.link")
-            ]
-            created_at = [
-                get(path="value.thread_create_date")
-                date1000
-            ]
-            summary = [
-                get(path="value.first_post.post_body_plain_text")
-                split(glue="\n")
-                first()
-            ]
-        }
-    )
+  pick(fields={
+    title      = [
+      get(path="value.thread_title")
+    ]
+    url        = [
+      get(path="value.links.permalink")
+    ]
+    image      = [
+      get(path="value.thread_image.link")
+    ]
+    created_at = [
+      get(path="value.thread_create_date")
+      date1000
+    ]
+    summary    = [
+      get(path="value.first_post.post_body_plain_text")
+      split(glue="\n")
+      first()
+    ]
+  })
 ]
 
 transforms [
-    nextjs_data
-    get(path="value.props.pageProps.apiData.jobs")
-    values()
-    script(name="parse_promoted")
-    uniq_by_field(field="url")
+  nextjs_data
+  get(path="value.props.pageProps.apiData.jobs")
+  values()
+  script(name="parse_promoted")
+  uniq_by_field(field="url")
 ]
-

@@ -1,6 +1,4 @@
 {
-  "id": "vnexpress",
-  "home": "https://vnexpress.net/",
   "pages": [
     {
       "name": "list",
@@ -12,7 +10,8 @@
       "parser": {
         "transforms": [
           {
-            "func": "html_node"
+            "func": "html_node",
+            "params": {}
           },
           {
             "func": "html_select_all",
@@ -42,7 +41,8 @@
                       }
                     },
                     {
-                      "func": "url"
+                      "func": "url",
+                      "params": {}
                     }
                   ],
                   "summary": [
@@ -56,22 +56,20 @@
                   "image": [
                     {
                       "func": "||",
-                      "params": {
-                        "items": [
-                          {
-                            "func": "html_select",
-                            "params": {
-                              "selector": "[itemprop=contentUrl]@data-src"
-                            }
-                          },
-                          {
-                            "func": "html_select",
-                            "params": {
-                              "selector": "[itemprop=contentUrl]@src"
-                            }
+                      "params": [
+                        {
+                          "func": "html_select",
+                          "params": {
+                            "selector": "[itemprop=contentUrl]@data-src"
                           }
-                        ]
-                      }
+                        },
+                        {
+                          "func": "html_select",
+                          "params": {
+                            "selector": "[itemprop=contentUrl]@src"
+                          }
+                        }
+                      ]
                     }
                   ]
                 }
@@ -82,10 +80,13 @@
             "func": "filter",
             "params": {
               "func": "!=",
-              "params": {
-                "exp1": "${value.title}",
-                "exp2": ""
-              }
+              "params": [
+                {
+                  "func": "get",
+                  "params": "value.title"
+                },
+                ""
+              ]
             }
           }
         ]
@@ -94,15 +95,18 @@
     {
       "name": "view",
       "patterns": [
-        "^https://vnexpress.net/.+-[\\d]+.html$"
+        "^https://vnexpress\\.net/.+-[\\d]+.html$"
       ],
+      "example": "https://vnexpress.net/nha-o-xa-hoi-chiec-phao-cua-doanh-nghiep-bat-dong-san-4589120.html",
       "parser": {
         "transforms": [
           {
-            "func": "html_node"
+            "func": "html_node",
+            "params": {}
           },
           {
-            "func": "html_fix_preload_image"
+            "func": "html_fix_preload_image",
+            "params": {}
           },
           {
             "func": "pick",
@@ -136,8 +140,7 @@
             }
           }
         ]
-      },
-      "example": "https://vnexpress.net/nha-o-xa-hoi-chiec-phao-cua-doanh-nghiep-bat-dong-san-4589120.html"
+      }
     }
   ]
 }

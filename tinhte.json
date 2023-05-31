@@ -3,7 +3,7 @@
     {
       "name": "list",
       "patterns": [
-        "^https://tinhte.vn/?$"
+        "^https://tinhte\\.vn/?$"
       ],
       "example": "https://tinhte.vn",
       "parser": {
@@ -13,19 +13,20 @@
               "func": "filter",
               "params": {
                 "func": "==",
-                "params": {
-                  "exp1": "${value._req.uri}",
-                  "exp2": "threads/promoted"
-                }
+                "params": [
+                  {
+                    "func": "get",
+                    "params": "value._req.uri"
+                  },
+                  "threads/promoted"
+                ]
               }
             },
             {
               "func": "map",
               "params": {
                 "func": "get",
-                "params": {
-                  "path": "value.threads"
-                }
+                "params": "value.threads"
               }
             },
             {
@@ -50,33 +51,25 @@
                   "title": [
                     {
                       "func": "get",
-                      "params": {
-                        "path": "value.thread_title"
-                      }
+                      "params": "value.thread_title"
                     }
                   ],
                   "url": [
                     {
                       "func": "get",
-                      "params": {
-                        "path": "value.links.permalink"
-                      }
+                      "params": "value.links.permalink"
                     }
                   ],
                   "image": [
                     {
                       "func": "get",
-                      "params": {
-                        "path": "value.thread_image.link"
-                      }
+                      "params": "value.thread_image.link"
                     }
                   ],
                   "created_at": [
                     {
                       "func": "get",
-                      "params": {
-                        "path": "value.thread_create_date"
-                      }
+                      "params": "value.thread_create_date"
                     },
                     {
                       "func": "date1000",
@@ -86,9 +79,7 @@
                   "summary": [
                     {
                       "func": "get",
-                      "params": {
-                        "path": "value.first_post.post_body_plain_text"
-                      }
+                      "params": "value.first_post.post_body_plain_text"
                     },
                     {
                       "func": "split",
@@ -98,7 +89,7 @@
                     },
                     {
                       "func": "first",
-                      "params": {}
+                      "params": ")"
                     }
                   ]
                 }
@@ -113,13 +104,11 @@
           },
           {
             "func": "get",
-            "params": {
-              "path": "value.props.pageProps.apiData.jobs"
-            }
+            "params": "value.props.pageProps.apiData.jobs"
           },
           {
             "func": "values",
-            "params": {}
+            "params": ")"
           },
           {
             "func": "script",
@@ -139,7 +128,7 @@
     {
       "name": "view",
       "patterns": [
-        "^https://tinhte.vn/thread/.+\\.\\d+/?$"
+        "^https://tinhte\\.vn/thread/.+\\.\\d+/?$"
       ],
       "example": "https://tinhte.vn/thread/tren-tay-rambler-14-oz-mau-nordic-blue-ly-giu-nhiet-ban-chay-nhi-cua-yeti.3669956/",
       "parser": {
@@ -152,45 +141,35 @@
                   "title": [
                     {
                       "func": "get",
-                      "params": {
-                        "path": "value.thread_title"
-                      }
+                      "params": "value.thread_title"
                     }
                   ],
                   "url": [
                     {
                       "func": "get",
-                      "params": {
-                        "path": "value.links.permalink"
-                      }
+                      "params": "value.links.permalink"
                     }
                   ],
                   "image": [
                     {
                       "func": "get",
-                      "params": {
-                        "path": "value.thread_image.link"
-                      }
+                      "params": "value.thread_image.link"
                     }
                   ],
                   "content": [
                     {
                       "func": "get",
-                      "params": {
-                        "path": "value.posts[0].post_body_html"
-                      }
+                      "params": "value.posts[0].post_body_html"
                     },
                     {
                       "func": "html_safe",
-                      "params": {}
+                      "params": ")"
                     }
                   ],
                   "created_at": [
                     {
                       "func": "get",
-                      "params": {
-                        "path": "value.thread_create_date"
-                      }
+                      "params": "value.thread_create_date"
                     },
                     {
                       "func": "date1000",
@@ -205,17 +184,13 @@
                           "name": [
                             {
                               "func": "get",
-                              "params": {
-                                "path": "value.creator_username"
-                              }
+                              "params": "value.creator_username"
                             }
                           ],
                           "avatar": [
                             {
                               "func": "get",
-                              "params": {
-                                "path": "value.links.first_poster_avatar"
-                              }
+                              "params": "value.links.first_poster_avatar"
                             }
                           ]
                         }
@@ -225,14 +200,12 @@
                   "comments": [
                     {
                       "func": "get",
-                      "params": {
-                        "path": "value.posts"
-                      }
+                      "params": "value.posts"
                     },
                     {
                       "func": "slice",
                       "params": {
-                        "start": 1
+                        "start": "1"
                       }
                     },
                     {
@@ -257,9 +230,7 @@
                   "content": [
                     {
                       "func": "get",
-                      "params": {
-                        "path": "value.post_body_html"
-                      }
+                      "params": "value.post_body_html"
                     }
                   ],
                   "author": [
@@ -270,17 +241,13 @@
                           "name": [
                             {
                               "func": "get",
-                              "params": {
-                                "path": "value.poster_username"
-                              }
+                              "params": "value.poster_username"
                             }
                           ],
                           "avatar": [
                             {
                               "func": "get",
-                              "params": {
-                                "path": "value.links.poster_avatar"
-                              }
+                              "params": "value.links.poster_avatar"
                             }
                           ]
                         }
@@ -299,29 +266,28 @@
           },
           {
             "func": "get",
-            "params": {
-              "path": "value.props.pageProps.apiData.jobs"
-            }
+            "params": "value.props.pageProps.apiData.jobs"
           },
           {
             "func": "values",
-            "params": {}
+            "params": ")"
           },
           {
             "func": "filter",
             "params": {
               "func": "==",
-              "params": {
-                "exp1": "${value._req.uri}",
-                "exp2": "posts"
-              }
+              "params": [
+                {
+                  "func": "get",
+                  "params": "value._req.uri"
+                },
+                "posts"
+              ]
             }
           },
           {
             "func": "get",
-            "params": {
-              "path": "value[0].thread"
-            }
+            "params": "value[0].thread"
           },
           {
             "func": "script",

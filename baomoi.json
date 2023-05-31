@@ -1,293 +1,302 @@
 {
-    "id": "baomoi",
-    "home": "https://baomoi.com",
-    "pages": [
-        {
-            "name": "list",
-            "patterns": [
-                "^https://baomoi.com/?$"
-            ],
-            "example": "https://baomoi.com",
-            "parser": {
-                "script": {
-                    "article": [
-                        {
-                            "func": "pick",
-                            "params": {
-                                "fields": {
-                                    "title": [
-                                        "get(path=value.title)"
-                                    ],
-                                    "summary": [
-                                        "get(path=value.description)"
-                                    ],
-                                    "url": [
-                                        "get(path=value.url)",
-                                        "url"
-                                    ],
-                                    "created_at": [
-                                        "get(path=value.date)",
-                                        "date1000"
-                                    ],
-                                    "image": [
-                                        "get(path=value.thumbL)"
-                                    ]
-                                }
-                            }
-                        }
-                    ]
+  "pages": [
+    {
+      "name": "list",
+      "patterns": [
+        "^https://baomoi.com/[a-z-]+.epi$"
+      ],
+      "example": "https://baomoi.com/the-gioi.epi",
+      "parser": {
+        "transforms": [
+          {
+            "func": "nextjs_data",
+            "params": {}
+          },
+          {
+            "func": "get",
+            "params": "value.props.pageProps.resp.data.content.sections[1].items"
+          },
+          {
+            "func": "map",
+            "params": {
+              "func": "pick",
+              "params": {
+                "fields": {
+                  "title": [
+                    {
+                      "func": "get",
+                      "params": "value.title"
+                    }
+                  ],
+                  "summary": [
+                    {
+                      "func": "get",
+                      "params": "value.description"
+                    }
+                  ],
+                  "image": [
+                    {
+                      "func": "get",
+                      "params": "value.thumb"
+                    }
+                  ],
+                  "url": [
+                    {
+                      "func": "get",
+                      "params": "value.url"
+                    },
+                    {
+                      "func": "replace",
+                      "params": {
+                        "pattern": "\\.epi.*$",
+                        "replacement": ".epi"
+                      }
+                    },
+                    {
+                      "func": "url",
+                      "params": {}
+                    }
+                  ],
+                  "created_at": [
+                    {
+                      "func": "get",
+                      "params": "value.date"
+                    },
+                    {
+                      "func": "date1000",
+                      "params": {}
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "func": "filter",
+            "params": {
+              "func": "!=",
+              "params": [
+                {
+                  "func": "get",
+                  "params": "value.title"
                 },
-                "transforms": [
-                    "nextjs_data",
-                    "get(path=value.props.pageProps.resp.data.content.sections)",
-                    {
-                        "func": "map",
-                        "params": "get(path=value.items)"
-                    },
-                    "flatten",
-                    {
-                        "func": "map",
-                        "params": "get(path=value.items)"
-                    },
-                    "flatten",
-                    {
-                        "func": "map",
-                        "params": "script(name=article)"
-                    },
-                    {
-                        "func": "filter",
-                        "params": {
-                            "func": "!=",
-                            "params": {
-                                "exp1": "${value.title}",
-                                "exp2": ""
-                            }
-                        }
-                    }
-                ]
+                ""
+              ]
             }
-        },
-        {
-            "name": "list",
-            "patterns": [
-                "^https://baomoi.com/[a-z-]+.epi$"
-            ],
-            "example": "https://baomoi.com/the-gioi.epi",
-            "parser": {
-                "transforms": [
-                    "nextjs_data",
+          }
+        ]
+      }
+    },
+    {
+      "name": "list",
+      "patterns": [
+        "^https://baomoi\\.com/?$"
+      ],
+      "example": "https://baomoi.com",
+      "parser": {
+        "script": {
+          "article": [
+            {
+              "func": "pick",
+              "params": {
+                "fields": {
+                  "title": [
                     {
-                        "func": "get",
-                        "params": {
-                            "path": "value.props.pageProps.resp.data.content.sections[1].items"
-                        }
-                    },
-                    {
-                        "func": "map",
-                        "params": {
-                            "func": "pick",
-                            "params": {
-                                "fields": {
-                                    "title": [
-                                        {
-                                            "func": "get",
-                                            "params": {
-                                                "path": [
-                                                    "value",
-                                                    "title"
-                                                ]
-                                            }
-                                        }
-                                    ],
-                                    "summary": [
-                                        {
-                                            "func": "get",
-                                            "params": {
-                                                "path": [
-                                                    "value",
-                                                    "description"
-                                                ]
-                                            }
-                                        }
-                                    ],
-                                    "image": [
-                                        {
-                                            "func": "get",
-                                            "params": {
-                                                "path": [
-                                                    "value",
-                                                    "thumb"
-                                                ]
-                                            }
-                                        }
-                                    ],
-                                    "url": [
-                                        {
-                                            "func": "get",
-                                            "params": {
-                                                "path": [
-                                                    "value",
-                                                    "url"
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "func": "replace",
-                                            "params": {
-                                                "pattern": "\\.epi.*$",
-                                                "replacement": ".epi"
-                                            }
-                                        },
-                                        {
-                                            "func": "url"
-                                        }
-                                    ],
-                                    "created_at": [
-                                        {
-                                            "func": "get",
-                                            "params": {
-                                                "path": [
-                                                    "value",
-                                                    "date"
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "func": "date1000"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "func": "filter",
-                        "params": {
-                            "func": "!=",
-                            "params": {
-                                "exp1": "${value.title}",
-                                "exp2": ""
-                            }
-                        }
+                      "func": "get",
+                      "params": "value.title"
                     }
-                ]
+                  ],
+                  "summary": [
+                    {
+                      "func": "get",
+                      "params": "value.description"
+                    }
+                  ],
+                  "url": [
+                    {
+                      "func": "get",
+                      "params": "value.url"
+                    },
+                    {
+                      "func": "url",
+                      "params": {}
+                    }
+                  ],
+                  "created_at": [
+                    {
+                      "func": "get",
+                      "params": "value.date"
+                    },
+                    {
+                      "func": "date1000",
+                      "params": {}
+                    }
+                  ],
+                  "image": [
+                    {
+                      "func": "get",
+                      "params": "value.thumbL"
+                    }
+                  ]
+                }
+              }
             }
+          ]
         },
-        {
-            "name": "view",
-            "patterns": [
-                "^https://baomoi.com/.+/c/[\\d]+.epi$"
-            ],
-            "parser": {
-                "transforms": [
-                    "nextjs_data",
-                    {
-                        "func": "get",
-                        "params": {
-                            "path": "value.props.pageProps.resp.data.content"
-                        }
-                    },
-                    {
-                        "func": "pick",
-                        "params": {
-                            "fields": {
-                                "title": [
-                                    {
-                                        "func": "get",
-                                        "params": {
-                                            "path": [
-                                                "value",
-                                                "title"
-                                            ]
-                                        }
-                                    }
-                                ],
-                                "summary": [
-                                    {
-                                        "func": "get",
-                                        "params": {
-                                            "path": [
-                                                "value",
-                                                "description"
-                                            ]
-                                        }
-                                    }
-                                ],
-                                "url": [
-                                    {
-                                        "func": "get",
-                                        "params": {
-                                            "path": [
-                                                "value",
-                                                "url"
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "func": "url"
-                                    }
-                                ],
-                                "created_at": [
-                                    {
-                                        "func": "get",
-                                        "params": {
-                                            "path": [
-                                                "value",
-                                                "date"
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "func": "date1000"
-                                    }
-                                ],
-                                "content": [
-                                    {
-                                        "func": "get",
-                                        "params": {
-                                            "path": [
-                                                "value",
-                                                "bodys"
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "func": "map",
-                                        "params": {
-                                            "func": "switch",
-                                            "params": {
-                                                "field": "${value.type}",
-                                                "cases": {
-                                                    "image": "<img src=\"${value.contentOrigin}\" />",
-                                                    "text": "<p>${value.content}</p>"
-                                                },
-                                                "default": ""
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "func": "filter",
-                                        "params": {
-                                            "func": "!==",
-                                            "params": {
-                                                "exp1": "${value}",
-                                                "exp2": ""
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "func": "join",
-                                        "params": {
-                                            "glue": "\n"
-                                        }
-                                    }
-                                ]
-                            }
-                        }
+        "transforms": [
+          {
+            "func": "nextjs_data",
+            "params": {}
+          },
+          {
+            "func": "get",
+            "params": "value.props.pageProps.resp.data.content.sections"
+          },
+          {
+            "func": "map",
+            "params": {
+              "func": "get",
+              "params": "value.items"
+            }
+          },
+          {
+            "func": "flatten",
+            "params": {}
+          },
+          {
+            "func": "map",
+            "params": {
+              "func": "get",
+              "params": "value.items"
+            }
+          },
+          {
+            "func": "flatten",
+            "params": {}
+          },
+          {
+            "func": "map",
+            "params": {
+              "func": "script",
+              "params": {
+                "name": "article"
+              }
+            }
+          },
+          {
+            "func": "filter",
+            "params": {
+              "func": "!=",
+              "params": [
+                {
+                  "func": "get",
+                  "params": "value.title"
+                },
+                ""
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "view",
+      "patterns": [
+        "^https://baomoi.com/.+/c/[\\d]+.epi$"
+      ],
+      "example": "https://baomoi.com/nhung-khu-pho-khong-co-rac/c/45826011.epi",
+      "parser": {
+        "transforms": [
+          {
+            "func": "nextjs_data",
+            "params": {}
+          },
+          {
+            "func": "get",
+            "params": {
+              "path": "value.props.pageProps.resp.data.content"
+            }
+          },
+          {
+            "func": "pick",
+            "params": {
+              "fields": {
+                "title": [
+                  {
+                    "func": "get",
+                    "params": "value.title"
+                  }
+                ],
+                "summary": [
+                  {
+                    "func": "get",
+                    "params": "value.description"
+                  }
+                ],
+                "url": [
+                  {
+                    "func": "get",
+                    "params": "value.url"
+                  },
+                  {
+                    "func": "url",
+                    "params": {}
+                  }
+                ],
+                "created_at": [
+                  {
+                    "func": "get",
+                    "params": "value.date"
+                  },
+                  {
+                    "func": "date1000",
+                    "params": {}
+                  }
+                ],
+                "content": [
+                  {
+                    "func": "get",
+                    "params": "value.bodys"
+                  },
+                  {
+                    "func": "map",
+                    "params": {
+                      "func": "switch",
+                      "params": {
+                        "field": "${value.type}",
+                        "cases": {
+                          "image": "<img src=\\\"${value.contentOrigin}\\\" />",
+                          "text": "<p>${value.content}</p>"
+                        },
+                        "default": ""
+                      }
                     }
+                  },
+                  {
+                    "func": "filter",
+                    "params": {
+                      "func": "!=",
+                      "params": [
+                        {
+                          "func": "get",
+                          "params": "value"
+                        },
+                        ""
+                      ]
+                    }
+                  },
+                  {
+                    "func": "join",
+                    "params": {
+                      "glue": "\\n"
+                    }
+                  }
                 ]
-            },
-            "example": "https://baomoi.com/nhung-khu-pho-khong-co-rac/c/45826011.epi"
-        }
-    ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
 }

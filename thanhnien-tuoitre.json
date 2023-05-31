@@ -1,18 +1,19 @@
 {
-  "id": "thanhnien",
-  "home": "https://thanhnien.vn",
   "pages": [
     {
       "name": "list",
       "patterns": [
-        "^https://thanhnien.vn$",
-        "^https://thanhnien.vn/[a-z-]+.htm$"
+        "^https://thanhnien\\.vn$",
+        "^https://thanhnien\\.vn/[a-z-]+\\.htm$",
+        "^https://tuoitre\\.vn/?$",
+        "^https://tuoitre\\.vn/[a-z-]+\\.htm$"
       ],
       "example": "https://thanhnien.vn",
       "parser": {
         "transforms": [
           {
-            "func": "html_node"
+            "func": "html_node",
+            "params": {}
           },
           {
             "func": "html_select_all",
@@ -42,7 +43,8 @@
                       }
                     },
                     {
-                      "func": "url"
+                      "func": "url",
+                      "params": ")"
                     }
                   ],
                   "summary": [
@@ -65,19 +67,27 @@
               }
             }
           },
-          "uniq_by_field(field=url)"
+          {
+            "func": "uniq_by_field",
+            "params": {
+              "field": "url"
+            }
+          }
         ]
       }
     },
     {
       "name": "view",
       "patterns": [
-        "^https://thanhnien.vn/.+-[\\d]+.htm$"
+        "^https://thanhnien\\.vn/.+-[\\d]+\\.htm",
+        "^https://tuoitre\\.vn/.+-[\\d]+\\.htm$"
       ],
+      "example": "https://thanhnien.vn/sinh-vien-viet-nam-tai-han-quoc-chu-trong-nghien-cuu-khoa-hoc-185230415152639264.htm",
       "parser": {
         "transforms": [
           {
-            "func": "html_node"
+            "func": "html_node",
+            "params": {}
           },
           {
             "func": "pick",
@@ -111,8 +121,7 @@
             }
           }
         ]
-      },
-      "example": "https://thanhnien.vn/sinh-vien-viet-nam-tai-han-quoc-chu-trong-nghien-cuu-khoa-hoc-185230415152639264.htm"
+      }
     }
   ]
 }

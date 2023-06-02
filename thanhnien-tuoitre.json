@@ -8,7 +8,7 @@
         "^https://tuoitre\\.vn/?$",
         "^https://tuoitre\\.vn/[a-z-]+\\.htm$"
       ],
-      "example": "https://thanhnien.vn",
+      "example": "https://tuoitre.vn/the-gioi.htm",
       "parser": {
         "transforms": [
           {

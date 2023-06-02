@@ -94,7 +94,7 @@
                         "func": "get",
                         "params": "value.title"
                       },
-                      ""
+                      null
                     ]
                   }
                 }
@@ -223,7 +223,7 @@
                         "func": "get",
                         "params": "value.title"
                       },
-                      ""
+                      null
                     ]
                   }
                 }

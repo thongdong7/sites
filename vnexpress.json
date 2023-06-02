@@ -95,7 +95,7 @@
                         "func": "get",
                         "params": "value.title"
                       },
-                      ""
+                      null
                     ]
                   }
                 }

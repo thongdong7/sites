@@ -99,27 +99,44 @@
         },
         "transforms": [
           {
-            "func": "nextjs_data",
-            "params": {}
-          },
-          {
-            "func": "get",
-            "params": "value.props.pageProps.apiData.jobs"
-          },
-          {
-            "func": "values",
-            "params": ")"
-          },
-          {
-            "func": "script",
+            "func": "pick",
             "params": {
-              "name": "parse_promoted"
-            }
-          },
-          {
-            "func": "uniq_by_field",
-            "params": {
-              "field": "url"
+              "title": [
+                {
+                  "func": "html_node",
+                  "params": {}
+                },
+                {
+                  "func": "html_select",
+                  "params": "title@text"
+                }
+              ],
+              "items": [
+                {
+                  "func": "nextjs_data",
+                  "params": {}
+                },
+                {
+                  "func": "get",
+                  "params": "value.props.pageProps.apiData.jobs"
+                },
+                {
+                  "func": "values",
+                  "params": ")"
+                },
+                {
+                  "func": "script",
+                  "params": {
+                    "name": "parse_promoted"
+                  }
+                },
+                {
+                  "func": "uniq_by_field",
+                  "params": {
+                    "field": "url"
+                  }
+                }
+              ]
             }
           }
         ]

@@ -9,78 +9,95 @@
       "parser": {
         "transforms": [
           {
-            "func": "nextjs_data",
-            "params": {}
-          },
-          {
-            "func": "get",
-            "params": "value.props.pageProps.resp.data.content.sections[1].items"
-          },
-          {
-            "func": "map",
+            "func": "pick",
             "params": {
-              "func": "pick",
-              "params": {
-                "fields": {
-                  "title": [
-                    {
-                      "func": "get",
-                      "params": "value.title"
-                    }
-                  ],
-                  "summary": [
-                    {
-                      "func": "get",
-                      "params": "value.description"
-                    }
-                  ],
-                  "image": [
-                    {
-                      "func": "get",
-                      "params": "value.thumb"
-                    }
-                  ],
-                  "url": [
-                    {
-                      "func": "get",
-                      "params": "value.url"
-                    },
-                    {
-                      "func": "replace",
-                      "params": {
-                        "pattern": "\\.epi.*$",
-                        "replacement": ".epi"
-                      }
-                    },
-                    {
-                      "func": "url",
-                      "params": {}
-                    }
-                  ],
-                  "created_at": [
-                    {
-                      "func": "get",
-                      "params": "value.date"
-                    },
-                    {
-                      "func": "date1000",
-                      "params": {}
-                    }
-                  ]
+              "title": [
+                {
+                  "func": "html_node",
+                  "params": {}
+                },
+                {
+                  "func": "html_select",
+                  "params": "title@text"
                 }
-              }
-            }
-          },
-          {
-            "func": "filter",
-            "params": {
-              "func": "!=",
-              "params": [
+              ],
+              "items": [
+                {
+                  "func": "nextjs_data",
+                  "params": {}
+                },
                 {
                   "func": "get",
-                  "params": "value.title"
+                  "params": "value.props.pageProps.resp.data.content.sections[1].items"
                 },
-                ""
+                {
+                  "func": "map",
+                  "params": {
+                    "func": "pick",
+                    "params": {
+                      "fields": {
+                        "title": [
+                          {
+                            "func": "get",
+                            "params": "value.title"
+                          }
+                        ],
+                        "summary": [
+                          {
+                            "func": "get",
+                            "params": "value.description"
+                          }
+                        ],
+                        "image": [
+                          {
+                            "func": "get",
+                            "params": "value.thumb"
+                          }
+                        ],
+                        "url": [
+                          {
+                            "func": "get",
+                            "params": "value.url"
+                          },
+                          {
+                            "func": "replace",
+                            "params": {
+                              "pattern": "\\.epi.*$",
+                              "replacement": ".epi"
+                            }
+                          },
+                          {
+                            "func": "url",
+                            "params": {}
+                          }
+                        ],
+                        "created_at": [
+                          {
+                            "func": "get",
+                            "params": "value.date"
+                          },
+                          {
+                            "func": "date1000",
+                            "params": {}
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "func": "filter",
+                  "params": {
+                    "func": "!=",
+                    "params": [
+                      {
+                        "func": "get",
+                        "params": "value.title"
+                      },
+                      ""
+                    ]
+                  }
+                }
               ]
             }
           }
@@ -145,54 +162,71 @@
         },
         "transforms": [
           {
-            "func": "nextjs_data",
-            "params": {}
-          },
-          {
-            "func": "get",
-            "params": "value.props.pageProps.resp.data.content.sections"
-          },
-          {
-            "func": "map",
+            "func": "pick",
             "params": {
-              "func": "get",
-              "params": "value.items"
-            }
-          },
-          {
-            "func": "flatten",
-            "params": {}
-          },
-          {
-            "func": "map",
-            "params": {
-              "func": "get",
-              "params": "value.items"
-            }
-          },
-          {
-            "func": "flatten",
-            "params": {}
-          },
-          {
-            "func": "map",
-            "params": {
-              "func": "script",
-              "params": {
-                "name": "article"
-              }
-            }
-          },
-          {
-            "func": "filter",
-            "params": {
-              "func": "!=",
-              "params": [
+              "title": [
+                {
+                  "func": "html_node",
+                  "params": {}
+                },
+                {
+                  "func": "html_select",
+                  "params": "title@text"
+                }
+              ],
+              "items": [
+                {
+                  "func": "nextjs_data",
+                  "params": {}
+                },
                 {
                   "func": "get",
-                  "params": "value.title"
+                  "params": "value.props.pageProps.resp.data.content.sections"
                 },
-                ""
+                {
+                  "func": "map",
+                  "params": {
+                    "func": "get",
+                    "params": "value.items"
+                  }
+                },
+                {
+                  "func": "flatten",
+                  "params": {}
+                },
+                {
+                  "func": "map",
+                  "params": {
+                    "func": "get",
+                    "params": "value.items"
+                  }
+                },
+                {
+                  "func": "flatten",
+                  "params": {}
+                },
+                {
+                  "func": "map",
+                  "params": {
+                    "func": "script",
+                    "params": {
+                      "name": "article"
+                    }
+                  }
+                },
+                {
+                  "func": "filter",
+                  "params": {
+                    "func": "!=",
+                    "params": [
+                      {
+                        "func": "get",
+                        "params": "value.title"
+                      },
+                      ""
+                    ]
+                  }
+                }
               ]
             }
           }

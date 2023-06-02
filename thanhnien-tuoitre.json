@@ -16,61 +16,74 @@
             "params": {}
           },
           {
-            "func": "html_select_all",
+            "func": "pick",
             "params": {
-              "selector": ".item-first,.item-related .box-category-item,.box-category-sub .box-category-item,.box-category-middle .box-category-item"
-            }
-          },
-          {
-            "func": "map",
-            "params": {
-              "func": "pick",
-              "params": {
-                "fields": {
-                  "title": [
-                    {
-                      "func": "html_select",
-                      "params": {
-                        "selector": "a@title"
-                      }
-                    }
-                  ],
-                  "url": [
-                    {
-                      "func": "html_select",
-                      "params": {
-                        "selector": "a@href"
-                      }
-                    },
-                    {
-                      "func": "url",
-                      "params": ")"
-                    }
-                  ],
-                  "summary": [
-                    {
-                      "func": "html_select",
-                      "params": {
-                        "selector": ".box-category-sapo@text"
-                      }
-                    }
-                  ],
-                  "image": [
-                    {
-                      "func": "html_select",
-                      "params": {
-                        "selector": ".box-category-avatar@src"
-                      }
-                    }
-                  ]
+              "title": [
+                {
+                  "func": "html_select",
+                  "params": "title@text"
                 }
-              }
-            }
-          },
-          {
-            "func": "uniq_by_field",
-            "params": {
-              "field": "url"
+              ],
+              "items": [
+                {
+                  "func": "html_select_all",
+                  "params": {
+                    "selector": ".item-first,.item-related .box-category-item,.box-category-sub .box-category-item,.box-category-middle .box-category-item"
+                  }
+                },
+                {
+                  "func": "map",
+                  "params": {
+                    "func": "pick",
+                    "params": {
+                      "fields": {
+                        "title": [
+                          {
+                            "func": "html_select",
+                            "params": {
+                              "selector": "a@title"
+                            }
+                          }
+                        ],
+                        "url": [
+                          {
+                            "func": "html_select",
+                            "params": {
+                              "selector": "a@href"
+                            }
+                          },
+                          {
+                            "func": "url",
+                            "params": ")"
+                          }
+                        ],
+                        "summary": [
+                          {
+                            "func": "html_select",
+                            "params": {
+                              "selector": ".box-category-sapo@text"
+                            }
+                          }
+                        ],
+                        "image": [
+                          {
+                            "func": "html_select",
+                            "params": {
+                              "selector": ".box-category-avatar@src"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "func": "uniq_by_field",
+                  "params": {
+                    "field": "url"
+                  }
+                }
+              ]
             }
           }
         ]

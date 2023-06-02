@@ -14,78 +14,91 @@
             "params": {}
           },
           {
-            "func": "html_select_all",
+            "func": "pick",
             "params": {
-              "selector": ".item-news"
-            }
-          },
-          {
-            "func": "map",
-            "params": {
-              "func": "pick",
-              "params": {
-                "fields": {
-                  "title": [
-                    {
-                      "func": "html_select",
-                      "params": {
-                        "selector": "h3.title-news a@title"
-                      }
-                    }
-                  ],
-                  "url": [
-                    {
-                      "func": "html_select",
-                      "params": {
-                        "selector": "h3.title-news a@href"
-                      }
-                    },
-                    {
-                      "func": "url",
-                      "params": {}
-                    }
-                  ],
-                  "summary": [
-                    {
-                      "func": "html_select",
-                      "params": {
-                        "selector": ".description a@text"
-                      }
-                    }
-                  ],
-                  "image": [
-                    {
-                      "func": "||",
-                      "params": [
-                        {
-                          "func": "html_select",
-                          "params": {
-                            "selector": "[itemprop=contentUrl]@data-src"
-                          }
-                        },
-                        {
-                          "func": "html_select",
-                          "params": {
-                            "selector": "[itemprop=contentUrl]@src"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          {
-            "func": "filter",
-            "params": {
-              "func": "!=",
-              "params": [
+              "title": [
                 {
-                  "func": "get",
-                  "params": "value.title"
+                  "func": "html_select",
+                  "params": "title@text"
+                }
+              ],
+              "items": [
+                {
+                  "func": "html_select_all",
+                  "params": {
+                    "selector": ".item-news"
+                  }
                 },
-                ""
+                {
+                  "func": "map",
+                  "params": {
+                    "func": "pick",
+                    "params": {
+                      "fields": {
+                        "title": [
+                          {
+                            "func": "html_select",
+                            "params": {
+                              "selector": "h3.title-news a@title"
+                            }
+                          }
+                        ],
+                        "url": [
+                          {
+                            "func": "html_select",
+                            "params": {
+                              "selector": "h3.title-news a@href"
+                            }
+                          },
+                          {
+                            "func": "url",
+                            "params": {}
+                          }
+                        ],
+                        "summary": [
+                          {
+                            "func": "html_select",
+                            "params": {
+                              "selector": ".description a@text"
+                            }
+                          }
+                        ],
+                        "image": [
+                          {
+                            "func": "||",
+                            "params": [
+                              {
+                                "func": "html_select",
+                                "params": {
+                                  "selector": "[itemprop=contentUrl]@data-src"
+                                }
+                              },
+                              {
+                                "func": "html_select",
+                                "params": {
+                                  "selector": "[itemprop=contentUrl]@src"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "func": "filter",
+                  "params": {
+                    "func": "!=",
+                    "params": [
+                      {
+                        "func": "get",
+                        "params": "value.title"
+                      },
+                      ""
+                    ]
+                  }
+                }
               ]
             }
           }

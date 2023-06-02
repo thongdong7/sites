@@ -1,0 +1,357 @@
+{
+  "pages": [
+    {
+      "name": "search",
+      "patterns": [
+        "^https://bachngocsach\\.com\\.vn/reader/search\\?ten="
+      ],
+      "example": "https://bachngocsach.com.vn/reader/search?ten=vong+ngu",
+      "parser": {
+        "transforms": [
+          {
+            "func": "html_node",
+            "params": {}
+          },
+          {
+            "func": "html_select_all",
+            "params": "li.search-row"
+          },
+          {
+            "func": "map",
+            "params": {
+              "func": "pick",
+              "params": {
+                "title": [
+                  {
+                    "func": "html_select",
+                    "params": ".search-truyen a@text"
+                  }
+                ],
+                "url": [
+                  {
+                    "func": "html_select",
+                    "params": ".search-truyen a@href"
+                  },
+                  {
+                    "func": "url",
+                    "params": {}
+                  }
+                ],
+                "image": [
+                  {
+                    "func": "html_select",
+                    "params": ".imgsty.thumbnail@src"
+                  }
+                ],
+                "author": [
+                  {
+                    "func": "pick",
+                    "params": {
+                      "name": [
+                        {
+                          "func": "html_select",
+                          "params": ".search-tacgia-a@text"
+                        }
+                      ],
+                      "url": [
+                        {
+                          "func": "html_select",
+                          "params": ".search-tacgia-a@href"
+                        },
+                        {
+                          "func": "url",
+                          "params": {}
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "category": [
+                  {
+                    "func": "pick",
+                    "params": {
+                      "name": [
+                        {
+                          "func": "html_select",
+                          "params": ".search-theloai-a@text"
+                        }
+                      ],
+                      "url": [
+                        {
+                          "func": "html_select",
+                          "params": ".search-theloai-a@href"
+                        },
+                        {
+                          "func": "url",
+                          "params": {}
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "list",
+      "patterns": [
+        "^https://bachngocsach.com.vn/reader/tacgia/.+"
+      ],
+      "example": "https://bachngocsach.com.vn/reader/tacgia/vong-ngu",
+      "parser": {
+        "transforms": [
+          {
+            "func": "html_node",
+            "params": {}
+          },
+          {
+            "func": "html_select_all",
+            "params": "li.term-row"
+          },
+          {
+            "func": "map",
+            "params": {
+              "func": "pick",
+              "params": {
+                "title": [
+                  {
+                    "func": "html_select",
+                    "params": "a.term-truyen-a@text"
+                  }
+                ],
+                "url": [
+                  {
+                    "func": "html_select",
+                    "params": "a.term-truyen-a@href"
+                  },
+                  {
+                    "func": "url",
+                    "params": {}
+                  }
+                ],
+                "image": [
+                  {
+                    "func": "html_select",
+                    "params": ".imgsty.medium@src"
+                  }
+                ],
+                "author": [
+                  {
+                    "func": "pick",
+                    "params": {
+                      "name": [
+                        {
+                          "func": "html_select",
+                          "params": ".term-tacgia-a@text"
+                        }
+                      ],
+                      "url": [
+                        {
+                          "func": "html_select",
+                          "params": ".term-tacgia-a@href"
+                        },
+                        {
+                          "func": "url",
+                          "params": {}
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "category": [
+                  {
+                    "func": "pick",
+                    "params": {
+                      "name": [
+                        {
+                          "func": "html_select",
+                          "params": ".term-theloai-a@text"
+                        }
+                      ],
+                      "url": [
+                        {
+                          "func": "html_select",
+                          "params": ".term-theloai-a@href"
+                        },
+                        {
+                          "func": "url",
+                          "params": {}
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "list",
+      "patterns": [
+        "https://bachngocsach\\.com\\.vn/reader/?$"
+      ],
+      "example": "https://bachngocsach.com.vn/reader/",
+      "parser": {
+        "script": {
+          "category_new": [
+            {
+              "func": "html_select_all",
+              "params": "li.newpost-row"
+            },
+            {
+              "func": "map",
+              "params": {
+                "func": "pick",
+                "params": {
+                  "title": [
+                    {
+                      "func": "html_select",
+                      "params": "a.truyen.convert@text"
+                    }
+                  ],
+                  "image": [
+                    {
+                      "func": "html_select",
+                      "params": "img.image@src"
+                    }
+                  ],
+                  "url": [
+                    {
+                      "func": "html_select",
+                      "params": "a.truyen.convert@href"
+                    },
+                    {
+                      "func": "url",
+                      "params": {}
+                    }
+                  ],
+                  "categories": [
+                    {
+                      "func": "html_select_all",
+                      "params": ".theloai-span"
+                    },
+                    {
+                      "func": "map",
+                      "params": {
+                        "func": "html_select",
+                        "params": ".theloai@text"
+                      }
+                    }
+                  ],
+                  "created_at": [
+                    {
+                      "func": "html_select",
+                      "params": ".timepost@datetime"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "editors": [
+            {
+              "func": "html_select_all",
+              "params": ".promote-row"
+            },
+            {
+              "func": "map",
+              "params": {
+                "func": "pick",
+                "params": {
+                  "title": [
+                    {
+                      "func": "html_select",
+                      "params": ".title@text"
+                    }
+                  ],
+                  "url": [
+                    {
+                      "func": "html_select",
+                      "params": ".title@href"
+                    },
+                    {
+                      "func": "url",
+                      "params": {}
+                    }
+                  ],
+                  "image": [
+                    {
+                      "func": "html_select",
+                      "params": ".sight@src"
+                    }
+                  ],
+                  "summary": [
+                    {
+                      "func": "html_select",
+                      "params": ".gioithieu@text"
+                    }
+                  ],
+                  "categories": [
+                    {
+                      "func": "html_select_all",
+                      "params": ".theloai-span"
+                    },
+                    {
+                      "func": "map",
+                      "params": {
+                        "func": "html_select",
+                        "params": ".theloai@text"
+                      }
+                    }
+                  ],
+                  "author": [
+                    {
+                      "func": "pick",
+                      "params": {
+                        "name": [
+                          {
+                            "func": "html_select",
+                            "params": ".tacgia@text"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "transforms": [
+          {
+            "func": "html_node",
+            "params": {}
+          },
+          {
+            "func": "pick",
+            "params": {
+              "title": [
+                {
+                  "func": "html_select",
+                  "params": "title@text"
+                }
+              ],
+              "category_new": [
+                {
+                  "func": "script",
+                  "params": "category_new"
+                }
+              ],
+              "category_editors": [
+                {
+                  "func": "script",
+                  "params": "editors"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

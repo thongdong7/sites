@@ -336,16 +336,43 @@
                   "params": "title@text"
                 }
               ],
-              "category_new": [
+              "categories": [
                 {
-                  "func": "script",
-                  "params": "category_new"
-                }
-              ],
-              "category_editors": [
-                {
-                  "func": "script",
-                  "params": "editors"
+                  "func": "pick_list",
+                  "params": [
+                    [
+                      {
+                        "func": "pick",
+                        "params": {
+                          "title": [
+                            "Moi"
+                          ],
+                          "items": [
+                            {
+                              "func": "script",
+                              "params": "category_new"
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "func": "pick",
+                        "params": {
+                          "title": [
+                            "De cu"
+                          ],
+                          "items": [
+                            {
+                              "func": "script",
+                              "params": "editors"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  ]
                 }
               ]
             }

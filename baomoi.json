@@ -299,7 +299,7 @@
                       "params": {
                         "field": "${value.type}",
                         "cases": {
-                          "image": "<img src=\\\"${value.contentOrigin}\\\" />",
+                          "image": "<img src=\"${value.contentOrigin}\" />",
                           "text": "<p>${value.content}</p>"
                         },
                         "default": ""
@@ -322,7 +322,7 @@
                   {
                     "func": "join",
                     "params": {
-                      "glue": "\\n"
+                      "glue": "\n"
                     }
                   }
                 ]

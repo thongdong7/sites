@@ -193,7 +193,8 @@
     {
       "name": "list",
       "patterns": [
-        "https://bachngocsach\\.com\\.vn/reader/?$"
+        "https://bachngocsach\\.com\\.vn/reader/?$",
+        "https://bachngocsach\\.com/reader/?$"
       ],
       "example": "https://bachngocsach.com.vn/reader/",
       "parser": {

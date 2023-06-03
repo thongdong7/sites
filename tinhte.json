@@ -91,6 +91,25 @@
                       "func": "first",
                       "params": ")"
                     }
+                  ],
+                  "author": [
+                    {
+                      "func": "pick",
+                      "params": {
+                        "name": [
+                          {
+                            "func": "get",
+                            "params": "value.creator_username"
+                          }
+                        ],
+                        "avatar": [
+                          {
+                            "func": "get",
+                            "params": "value.links.first_poster_avatar"
+                          }
+                        ]
+                      }
+                    }
                   ]
                 }
               }

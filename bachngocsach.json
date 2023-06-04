@@ -370,6 +370,61 @@
       }
     },
     {
+      "name": "view",
+      "patterns": [
+        "https://bachngocsach\\.com\\.vn/reader/[a-z0-9\\-]+/[a-z0-9]+$"
+      ],
+      "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert/epbt",
+      "parser": {
+        "transforms": [
+          {
+            "func": "html_node",
+            "params": {}
+          },
+          {
+            "func": "pick",
+            "params": {
+              "title": [
+                {
+                  "func": "html_select",
+                  "params": "#chuong-title@text"
+                }
+              ],
+              "author": [
+                {
+                  "func": "pick",
+                  "params": {
+                    "name": [
+                      {
+                        "func": "html_select",
+                        "params": ".contributor.submitted a@text"
+                      }
+                    ],
+                    "url": [
+                      {
+                        "func": "html_select",
+                        "params": ".contributor.submitted a@href"
+                      },
+                      {
+                        "func": "url",
+                        "params": {}
+                      }
+                    ]
+                  }
+                }
+              ],
+              "content": [
+                {
+                  "func": "html_select",
+                  "params": "#noi-dung@html"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "list",
       "patterns": [
         "https://bachngocsach\\.com\\.vn/reader/?$",

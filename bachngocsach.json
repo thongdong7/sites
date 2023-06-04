@@ -1,6 +1,185 @@
 {
   "pages": [
     {
+      "name": "list",
+      "patterns": [
+        "https://bachngocsach\\.com\\.vn/reader/[a-z0-9\\-]+/?$"
+      ],
+      "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert",
+      "parser": {
+        "script": {
+          "latest": [
+            {
+              "func": "pick",
+              "params": {
+                "title": [
+                  {
+                    "func": "html_select",
+                    "params": "#chuong-list-new .chuong-list-h2@text"
+                  }
+                ],
+                "items": [
+                  {
+                    "func": "html_select_all",
+                    "params": "#chuong-list-new li.chuong-item"
+                  },
+                  {
+                    "func": "map",
+                    "params": {
+                      "func": "pick",
+                      "params": {
+                        "title": [
+                          {
+                            "func": "html_select",
+                            "params": ".chuong-name@text"
+                          }
+                        ],
+                        "url": [
+                          {
+                            "func": "html_select",
+                            "params": ".chuong-link@href"
+                          },
+                          {
+                            "func": "url",
+                            "params": {}
+                          }
+                        ],
+                        "author": [
+                          {
+                            "func": "pick",
+                            "params": {
+                              "name": [
+                                {
+                                  "func": "html_select",
+                                  "params": ".chuong-poster@text"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "mucluc": [
+            {
+              "func": "pick",
+              "params": {
+                "title": [
+                  "M\u1ee5c l\u1ee5c"
+                ],
+                "items": [
+                  {
+                    "func": "html_select_all",
+                    "params": "#chuong-list-new li.chuong-item"
+                  },
+                  {
+                    "func": "map",
+                    "params": {
+                      "func": "pick",
+                      "params": {
+                        "title": [
+                          {
+                            "func": "html_select",
+                            "params": ".chuong-name@text"
+                          }
+                        ],
+                        "url": [
+                          {
+                            "func": "html_select",
+                            "params": ".chuong-link@href"
+                          },
+                          {
+                            "func": "url",
+                            "params": {}
+                          }
+                        ],
+                        "author": [
+                          {
+                            "func": "pick",
+                            "params": {
+                              "name": [
+                                {
+                                  "func": "html_select",
+                                  "params": ".chuong-poster@text"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "transforms": [
+          {
+            "func": "html_node",
+            "params": {}
+          },
+          {
+            "func": "pick",
+            "params": {
+              "title": [
+                {
+                  "func": "html_select",
+                  "params": "#truyen-title@text"
+                }
+              ],
+              "author": [
+                {
+                  "func": "pick",
+                  "params": {
+                    "name": [
+                      {
+                        "func": "html_select",
+                        "params": "#tacgia a@text"
+                      }
+                    ],
+                    "url": [
+                      {
+                        "func": "html_select",
+                        "params": "#tacgia a@href"
+                      },
+                      {
+                        "func": "url",
+                        "params": {}
+                      }
+                    ]
+                  }
+                }
+              ],
+              "categories": [
+                {
+                  "func": "pick_list",
+                  "params": [
+                    [
+                      {
+                        "func": "script",
+                        "params": "latest"
+                      }
+                    ],
+                    [
+                      {
+                        "func": "script",
+                        "params": "mucluc"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "search",
       "patterns": [
         "^https://bachngocsach\\.com\\.vn/reader/search\\?ten="

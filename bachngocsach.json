@@ -74,7 +74,7 @@
                 "items": [
                   {
                     "func": "html_select_all",
-                    "params": "#chuong-list-new li.chuong-item"
+                    "params": "#chuong-list li.chuong-item"
                   },
                   {
                     "func": "map",

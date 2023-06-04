@@ -346,13 +346,16 @@
                         "func": "pick",
                         "params": {
                           "title": [
-                            "Moi"
+                            "M\u1edbi c\u1eadp nh\u1eadt"
                           ],
                           "items": [
                             {
                               "func": "script",
                               "params": "category_new"
                             }
+                          ],
+                          "display": [
+                            "card"
                           ]
                         }
                       }
@@ -362,13 +365,16 @@
                         "func": "pick",
                         "params": {
                           "title": [
-                            "De cu"
+                            "Bi\u00ean t\u1eadp vi\u00ean \u0111\u1ec1 c\u1eed "
                           ],
                           "items": [
                             {
                               "func": "script",
                               "params": "editors"
                             }
+                          ],
+                          "display": [
+                            "card"
                           ]
                         }
                       }

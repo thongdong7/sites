@@ -370,9 +370,170 @@
       }
     },
     {
+      "name": "list",
+      "patterns": [
+        "https://bachngocsach\\.com\\.vn/reader/[a-z0-9\\-]+/muc-luc"
+      ],
+      "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert/muc-luc",
+      "parser": {
+        "script": {
+          "mucluc": [
+            {
+              "func": "pick",
+              "params": {
+                "title": [
+                  "M\u1ee5c l\u1ee5c"
+                ],
+                "items": [
+                  {
+                    "func": "html_select_all",
+                    "params": "li.chuong-item"
+                  },
+                  {
+                    "func": "map",
+                    "params": {
+                      "func": "pick",
+                      "params": {
+                        "title": [
+                          {
+                            "func": "html_select",
+                            "params": ".chuong-name@text"
+                          }
+                        ],
+                        "url": [
+                          {
+                            "func": "html_select",
+                            "params": ".chuong-link@href"
+                          },
+                          {
+                            "func": "url",
+                            "params": {}
+                          }
+                        ],
+                        "author": [
+                          {
+                            "func": "pick",
+                            "params": {
+                              "name": [
+                                {
+                                  "func": "html_select",
+                                  "params": ".chuong-poster@text"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "transforms": [
+          {
+            "func": "html_node",
+            "params": {}
+          },
+          {
+            "func": "pick",
+            "params": {
+              "title": [
+                {
+                  "func": "html_select",
+                  "params": ".title@text"
+                }
+              ],
+              "categories": [
+                {
+                  "func": "pick_list",
+                  "params": [
+                    [
+                      {
+                        "func": "script",
+                        "params": "mucluc"
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "header_links": [
+                {
+                  "func": "pick_list",
+                  "params": [
+                    {
+                      "func": "pick",
+                      "params": {
+                        "text": {
+                          "func": "html_select",
+                          "params": "a.title@text"
+                        },
+                        "url": [
+                          {
+                            "func": "html_select",
+                            "params": "a.title@href"
+                          },
+                          {
+                            "func": "url",
+                            "params": {}
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
+              "footer_links": [
+                {
+                  "func": "html_select_all",
+                  "params": ".pager li"
+                },
+                {
+                  "func": "map",
+                  "params": {
+                    "func": "pick",
+                    "params": {
+                      "text": {
+                        "func": "html_select",
+                        "params": ".pager-link@text"
+                      },
+                      "url": [
+                        {
+                          "func": "html_select",
+                          "params": ".pager-link@href"
+                        },
+                        {
+                          "func": "url",
+                          "params": {}
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "func": "filter",
+                  "params": {
+                    "func": "!=",
+                    "params": [
+                      {
+                        "func": "get",
+                        "params": "value.url"
+                      },
+                      null
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "view",
       "patterns": [
-        "https://bachngocsach\\.com\\.vn/reader/[a-z0-9\\-]+/[a-z0-9]+$"
+        "https://bachngocsach\\.com\\.vn/reader/[a-z0-9\\-]+/(?!muc-luc)([a-z0-9]+)$"
       ],
       "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert/qvwt",
       "parser": {
@@ -413,33 +574,76 @@
                 "func": "html_select",
                 "params": "#noi-dung@html"
               },
+              "header_links": [
+                {
+                  "func": "pick_list",
+                  "params": [
+                    {
+                      "func": "pick",
+                      "params": {
+                        "text": {
+                          "func": "html_select",
+                          "params": "a.title@text"
+                        },
+                        "url": [
+                          {
+                            "func": "html_select",
+                            "params": "a.title@href"
+                          },
+                          {
+                            "func": "url",
+                            "params": {}
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "func": "pick",
+                      "params": {
+                        "text": {
+                          "func": "html_select",
+                          "params": ".page-index a@text"
+                        },
+                        "url": [
+                          {
+                            "func": "html_select",
+                            "params": ".page-index a@href"
+                          },
+                          {
+                            "func": "url",
+                            "params": {}
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
               "footer_links": [
                 {
                   "func": "pick_list",
                   "params": [
-                    [
-                      {
-                        "func": "pick",
-                        "params": {
-                          "text": [
-                            {
-                              "func": "html_select",
-                              "params": "a.page-next@title"
-                            }
-                          ],
-                          "url": [
-                            {
-                              "func": "html_select",
-                              "params": ".page-next.chuong-button@href"
-                            },
-                            {
-                              "func": "url",
-                              "params": {}
-                            }
-                          ]
-                        }
+                    {
+                      "func": "pick",
+                      "params": {
+                        "text": [
+                          {
+                            "func": "html_select",
+                            "params": "a.page-next@title"
+                          }
+                        ],
+                        "url": [
+                          {
+                            "func": "html_select",
+                            "params": ".page-next.chuong-button@href"
+                          },
+                          {
+                            "func": "url",
+                            "params": {}
+                          }
+                        ]
                       }
-                    ]
+                    }
                   ]
                 }
               ]

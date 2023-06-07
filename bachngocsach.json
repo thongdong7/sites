@@ -445,19 +445,6 @@
                   "params": ".title@text"
                 }
               ],
-              "categories": [
-                {
-                  "func": "pick_list",
-                  "params": [
-                    [
-                      {
-                        "func": "script",
-                        "params": "mucluc"
-                      }
-                    ]
-                  ]
-                }
-              ],
               "header_links": [
                 {
                   "func": "pick_list",
@@ -485,6 +472,10 @@
                 }
               ],
               "footer_links": [
+                {
+                  "func": "html_select_one",
+                  "params": ".pager-nav"
+                },
                 {
                   "func": "html_select_all",
                   "params": ".pager li"

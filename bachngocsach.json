@@ -212,11 +212,27 @@
                           "params": "href"
                         },
                         {
-                          "func": "url",
-                          "params": {}
+                          "func": "replace",
+                          "params": {
+                            "pattern": "#.*$",
+                            "replacement": ""
+                          }
                         }
                       ]
                     }
+                  }
+                },
+                {
+                  "func": "filter",
+                  "params": {
+                    "func": "!=",
+                    "params": [
+                      {
+                        "func": "get",
+                        "params": "value.url"
+                      },
+                      ""
+                    ]
                   }
                 }
               ],

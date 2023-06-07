@@ -3,7 +3,7 @@
     {
       "name": "list",
       "patterns": [
-        "https://bachngocsach\\.com\\.vn/reader/[a-z0-9\\-]+/?$"
+        "https://bachngocsach\\.com(\\.vn)?/reader/[a-z0-9\\-]+/?$"
       ],
       "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert",
       "parser": {
@@ -802,8 +802,7 @@
     {
       "name": "list",
       "patterns": [
-        "https://bachngocsach\\.com\\.vn/reader/?$",
-        "https://bachngocsach\\.com/reader/?$"
+        "https://bachngocsach\\.com(\\.vn)?/reader/?$"
       ],
       "example": "https://bachngocsach.com.vn/reader/",
       "parser": {

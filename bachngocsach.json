@@ -709,7 +709,7 @@
     {
       "name": "view",
       "patterns": [
-        "https://bachngocsach\\.com\\.vn/reader/[a-z0-9\\-]+/(?!muc-luc)([a-z0-9]+)$"
+        "https://bachngocsach\\.com(\\.vn)?/reader/[a-z0-9\\-]+/(?!muc-luc)([a-z0-9]+)$"
       ],
       "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert/oexi",
       "parser": {

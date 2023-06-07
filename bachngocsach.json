@@ -372,9 +372,9 @@
     {
       "name": "list",
       "patterns": [
-        "https://bachngocsach\\.com\\.vn/reader/[a-z0-9\\-]+/muc-luc"
+        "^https://bachngocsach\\.com\\.vn/reader/[a-z0-9\\-]+/muc-luc"
       ],
-      "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert/muc-luc",
+      "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert/muc-luc?page=1#nid-2952920",
       "parser": {
         "script": {
           "mucluc": [
@@ -535,7 +535,7 @@
       "patterns": [
         "https://bachngocsach\\.com\\.vn/reader/[a-z0-9\\-]+/(?!muc-luc)([a-z0-9]+)$"
       ],
-      "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert/qvwt",
+      "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert/oexi",
       "parser": {
         "transforms": [
           {
@@ -608,6 +608,13 @@
                           {
                             "func": "html_select",
                             "params": ".page-index a@href"
+                          },
+                          {
+                            "func": "replace",
+                            "params": {
+                              "pattern": "/muc-luc.*$",
+                              "replacement": "/muc-luc"
+                            }
                           },
                           {
                             "func": "url",

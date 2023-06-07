@@ -390,92 +390,128 @@
     {
       "name": "list",
       "patterns": [
-        "^https://bachngocsach.com.vn/reader/tacgia/.+"
+        "^https://bachngocsach\\.com(\\.vn)?/reader/tacgia/.+"
       ],
       "example": "https://bachngocsach.com.vn/reader/tacgia/vong-ngu",
       "parser": {
+        "script": {
+          "extract_items": [
+            {
+              "func": "html_select_all",
+              "params": "li.term-row"
+            },
+            {
+              "func": "map",
+              "params": {
+                "func": "pick",
+                "params": {
+                  "title": [
+                    {
+                      "func": "html_select",
+                      "params": "a.term-truyen-a@text"
+                    }
+                  ],
+                  "url": [
+                    {
+                      "func": "html_select",
+                      "params": "a.term-truyen-a@href"
+                    },
+                    {
+                      "func": "url",
+                      "params": {}
+                    }
+                  ],
+                  "image": [
+                    {
+                      "func": "html_select",
+                      "params": ".imgsty.medium@src"
+                    }
+                  ],
+                  "author": [
+                    {
+                      "func": "pick",
+                      "params": {
+                        "name": [
+                          {
+                            "func": "html_select",
+                            "params": ".term-tacgia-a@text"
+                          }
+                        ],
+                        "url": [
+                          {
+                            "func": "html_select",
+                            "params": ".term-tacgia-a@href"
+                          },
+                          {
+                            "func": "url",
+                            "params": {}
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "category": [
+                    {
+                      "func": "pick",
+                      "params": {
+                        "name": [
+                          {
+                            "func": "html_select",
+                            "params": ".term-theloai-a@text"
+                          }
+                        ],
+                        "url": [
+                          {
+                            "func": "html_select",
+                            "params": ".term-theloai-a@href"
+                          },
+                          {
+                            "func": "url",
+                            "params": {}
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
         "transforms": [
           {
             "func": "html_node",
             "params": {}
           },
           {
-            "func": "html_select_all",
-            "params": "li.term-row"
-          },
-          {
-            "func": "map",
+            "func": "pick",
             "params": {
-              "func": "pick",
-              "params": {
-                "title": [
-                  {
-                    "func": "html_select",
-                    "params": "a.term-truyen-a@text"
+              "title": {
+                "func": "html_select",
+                "params": "#page-title@text"
+              },
+              "header_links": {
+                "func": "pick_list",
+                "params": {
+                  "func": "pick",
+                  "params": {
+                    "text": "B\u1ea1ch Ng\u1ecdc S\u00e1ch",
+                    "url": [
+                      {
+                        "func": "html_select",
+                        "params": "#header a@href"
+                      },
+                      {
+                        "func": "url",
+                        "params": {}
+                      }
+                    ]
                   }
-                ],
-                "url": [
-                  {
-                    "func": "html_select",
-                    "params": "a.term-truyen-a@href"
-                  },
-                  {
-                    "func": "url",
-                    "params": {}
-                  }
-                ],
-                "image": [
-                  {
-                    "func": "html_select",
-                    "params": ".imgsty.medium@src"
-                  }
-                ],
-                "author": [
-                  {
-                    "func": "pick",
-                    "params": {
-                      "name": [
-                        {
-                          "func": "html_select",
-                          "params": ".term-tacgia-a@text"
-                        }
-                      ],
-                      "url": [
-                        {
-                          "func": "html_select",
-                          "params": ".term-tacgia-a@href"
-                        },
-                        {
-                          "func": "url",
-                          "params": {}
-                        }
-                      ]
-                    }
-                  }
-                ],
-                "category": [
-                  {
-                    "func": "pick",
-                    "params": {
-                      "name": [
-                        {
-                          "func": "html_select",
-                          "params": ".term-theloai-a@text"
-                        }
-                      ],
-                      "url": [
-                        {
-                          "func": "html_select",
-                          "params": ".term-theloai-a@href"
-                        },
-                        {
-                          "func": "url",
-                          "params": {}
-                        }
-                      ]
-                    }
-                  }
-                ]
+                }
+              },
+              "items": {
+                "func": "script",
+                "params": "extract_items"
               }
             }
           }

@@ -155,6 +155,25 @@
                   ]
                 }
               },
+              "header_links": {
+                "func": "pick_list",
+                "params": {
+                  "func": "pick",
+                  "params": {
+                    "text": "B\u1ea1ch Ng\u1ecdc S\u00e1ch",
+                    "url": [
+                      {
+                        "func": "html_select",
+                        "params": "#header a@href"
+                      },
+                      {
+                        "func": "url",
+                        "params": {}
+                      }
+                    ]
+                  }
+                }
+              },
               "tags": [
                 {
                   "func": "html_select_all",

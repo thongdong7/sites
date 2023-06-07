@@ -521,7 +521,7 @@
     {
       "name": "list",
       "patterns": [
-        "^https://bachngocsach\\.com\\.vn/reader/[a-z0-9\\-]+/muc-luc"
+        "^https://bachngocsach\\.com(\\.vn)?/reader/[a-z0-9\\-]+/muc-luc"
       ],
       "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert/muc-luc",
       "parser": {

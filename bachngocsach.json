@@ -445,6 +445,19 @@
                   "params": ".title@text"
                 }
               ],
+              "categories": [
+                {
+                  "func": "pick_list",
+                  "params": [
+                    [
+                      {
+                        "func": "script",
+                        "params": "mucluc"
+                      }
+                    ]
+                  ]
+                }
+              ],
               "header_links": [
                 {
                   "func": "pick_list",

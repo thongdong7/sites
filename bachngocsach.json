@@ -126,54 +126,100 @@
           {
             "func": "pick",
             "params": {
-              "title": [
-                {
-                  "func": "html_select",
-                  "params": "#truyen-title@text"
+              "title": {
+                "func": "html_select",
+                "params": "#truyen-title@text"
+              },
+              "image": {
+                "func": "html_select",
+                "params": "#anhbia img@src"
+              },
+              "author": {
+                "func": "pick",
+                "params": {
+                  "name": [
+                    {
+                      "func": "html_select",
+                      "params": "#tacgia a@text"
+                    }
+                  ],
+                  "url": [
+                    {
+                      "func": "html_select",
+                      "params": "#tacgia a@href"
+                    },
+                    {
+                      "func": "url",
+                      "params": {}
+                    }
+                  ]
                 }
-              ],
-              "author": [
+              },
+              "tags": [
                 {
-                  "func": "pick",
+                  "func": "html_select_all",
+                  "params": ".flag-term"
+                },
+                {
+                  "func": "map",
                   "params": {
-                    "name": [
-                      {
-                        "func": "html_select",
-                        "params": "#tacgia a@text"
+                    "func": "pick",
+                    "params": {
+                      "text": {
+                        "func": "html_get_attr",
+                        "params": "@text"
                       }
-                    ],
-                    "url": [
-                      {
-                        "func": "html_select",
-                        "params": "#tacgia a@href"
-                      },
-                      {
-                        "func": "url",
-                        "params": {}
-                      }
-                    ]
+                    }
                   }
                 }
               ],
-              "categories": [
+              "types": [
                 {
-                  "func": "pick_list",
-                  "params": [
-                    [
-                      {
-                        "func": "script",
-                        "params": "latest"
-                      }
-                    ],
-                    [
-                      {
-                        "func": "script",
-                        "params": "mucluc"
-                      }
-                    ]
-                  ]
+                  "func": "html_select_all",
+                  "params": "#theloai a"
+                },
+                {
+                  "func": "map",
+                  "params": {
+                    "func": "pick",
+                    "params": {
+                      "name": [
+                        {
+                          "func": "html_get_attr",
+                          "params": "@text"
+                        }
+                      ],
+                      "url": [
+                        {
+                          "func": "html_get_attr",
+                          "params": "href"
+                        },
+                        {
+                          "func": "url",
+                          "params": {}
+                        }
+                      ]
+                    }
+                  }
                 }
-              ]
+              ],
+              "categories": {
+                "func": "pick_list",
+                "params": [
+                  [
+                    {
+                      "func": "script",
+                      "params": "latest"
+                    }
+                  ],
+                  [
+                    {
+                      "func": "script",
+                      "params": "mucluc"
+                    }
+                  ]
+                ]
+              }
             }
           }
         ]
@@ -374,7 +420,7 @@
       "patterns": [
         "^https://bachngocsach\\.com\\.vn/reader/[a-z0-9\\-]+/muc-luc"
       ],
-      "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert/muc-luc?page=1#nid-2952920",
+      "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert/muc-luc",
       "parser": {
         "script": {
           "mucluc": [
@@ -443,6 +489,29 @@
                 {
                   "func": "html_select",
                   "params": ".title@text"
+                }
+              ],
+              "author": [
+                {
+                  "func": "pick",
+                  "params": {
+                    "name": [
+                      {
+                        "func": "html_select",
+                        "params": "#tacgia a@text"
+                      }
+                    ],
+                    "url": [
+                      {
+                        "func": "html_select",
+                        "params": "#tacgia a@href"
+                      },
+                      {
+                        "func": "url",
+                        "params": {}
+                      }
+                    ]
+                  }
                 }
               ],
               "categories": [

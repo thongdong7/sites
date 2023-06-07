@@ -192,6 +192,38 @@
                   }
                 }
               ],
+              "links": [
+                {
+                  "func": "html_select_all",
+                  "params": "#truyen-nav a"
+                },
+                {
+                  "func": "map",
+                  "params": {
+                    "func": "pick",
+                    "params": {
+                      "text": {
+                        "func": "html_get_attr",
+                        "params": "@text"
+                      },
+                      "url": [
+                        {
+                          "func": "html_get_attr",
+                          "params": "href"
+                        },
+                        {
+                          "func": "url",
+                          "params": {}
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "intro": {
+                "func": "html_select",
+                "params": ".block-content@html"
+              },
               "types": [
                 {
                   "func": "html_select_all",

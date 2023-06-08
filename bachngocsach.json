@@ -6,6 +6,10 @@
         "https://bachngocsach\\.com(\\.vn)?/reader/[a-z0-9\\-]+/?$"
       ],
       "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert",
+      "search": {
+        "url": "https://bachngocsach.com.vn/reader/search",
+        "field": "ten"
+      },
       "parser": {
         "script": {
           "latest": [
@@ -298,6 +302,10 @@
         "^https://bachngocsach\\.com(\\.vn)?/reader/search\\?ten="
       ],
       "example": "https://bachngocsach.com.vn/reader/search?ten=vong+ngu",
+      "search": {
+        "url": "https://bachngocsach.com.vn/reader/search",
+        "field": "ten"
+      },
       "parser": {
         "script": {
           "items": [
@@ -410,6 +418,10 @@
         "^https://bachngocsach\\.com(\\.vn)?/reader/tacgia/.+"
       ],
       "example": "https://bachngocsach.com.vn/reader/tacgia/vong-ngu",
+      "search": {
+        "url": "https://bachngocsach.com.vn/reader/search",
+        "field": "ten"
+      },
       "parser": {
         "script": {
           "extract_items": [
@@ -541,6 +553,10 @@
         "^https://bachngocsach\\.com(\\.vn)?/reader/[a-z0-9\\-]+/muc-luc"
       ],
       "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert/muc-luc",
+      "search": {
+        "url": "https://bachngocsach.com.vn/reader/search",
+        "field": "ten"
+      },
       "parser": {
         "script": {
           "mucluc": [
@@ -729,6 +745,10 @@
         "https://bachngocsach\\.com(\\.vn)?/reader/[a-z0-9\\-]+/(?!muc-luc)([a-z0-9]+)$"
       ],
       "example": "https://bachngocsach.com.vn/reader/cong-chua-xin-tu-trong-convert/oexi",
+      "search": {
+        "url": "https://bachngocsach.com.vn/reader/search",
+        "field": "ten"
+      },
       "parser": {
         "transforms": [
           {
@@ -858,6 +878,10 @@
         "https://bachngocsach\\.com(\\.vn)?/reader/?$"
       ],
       "example": "https://bachngocsach.com.vn/reader/",
+      "search": {
+        "url": "https://bachngocsach.com.vn/reader/search",
+        "field": "ten"
+      },
       "parser": {
         "script": {
           "category_new": [

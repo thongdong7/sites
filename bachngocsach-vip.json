@@ -1,0 +1,212 @@
+{
+  "pages": [
+    {
+      "name": "list",
+      "patterns": [
+        "https://bachngocsach\\.vip/?$"
+      ],
+      "example": "https://bachngocsach.vip",
+      "search": {
+        "url": "https://bachngocsach.com.vn/reader/search",
+        "field": "ten"
+      },
+      "parser": {
+        "script": {
+          "article": [
+            {
+              "func": "pick",
+              "params": {
+                "title": {
+                  "func": "get",
+                  "params": "value.name"
+                },
+                "image": {
+                  "func": "get",
+                  "params": "value.cover"
+                },
+                "url": [
+                  {
+                    "func": "+",
+                    "params": [
+                      {
+                        "func": "+",
+                        "params": [
+                          {
+                            "func": "+",
+                            "params": [
+                              {
+                                "func": "+",
+                                "params": [
+                                  "https://bachngocsach.vip/truyen/",
+                                  {
+                                    "func": "get",
+                                    "params": "value.slug"
+                                  }
+                                ]
+                              },
+                              "/"
+                            ]
+                          },
+                          {
+                            "func": "get",
+                            "params": "value.id"
+                          }
+                        ]
+                      },
+                      ".html"
+                    ]
+                  }
+                ],
+                "summary": [
+                  {
+                    "func": "get",
+                    "params": "value.desc"
+                  },
+                  {
+                    "func": "truncate_word",
+                    "params": 100
+                  }
+                ],
+                "author": {
+                  "func": "pick",
+                  "params": {
+                    "name": {
+                      "func": "get",
+                      "params": "value.author.name"
+                    },
+                    "url": [
+                      {
+                        "func": "+",
+                        "params": [
+                          {
+                            "func": "+",
+                            "params": [
+                              {
+                                "func": "+",
+                                "params": [
+                                  {
+                                    "func": "+",
+                                    "params": [
+                                      "https://bachngocsach.vip/tac-gia/",
+                                      {
+                                        "func": "get",
+                                        "params": "value.author.slug"
+                                      }
+                                    ]
+                                  },
+                                  "/"
+                                ]
+                              },
+                              {
+                                "func": "get",
+                                "params": "value.author.id"
+                              }
+                            ]
+                          },
+                          ".html"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "category_new": [
+            {
+              "func": "download",
+              "params": {
+                "url": "https://api.bachngocsach.vip/api/story-newest?per_page=10",
+                "type": "json"
+              }
+            },
+            {
+              "func": "get",
+              "params": "value.data"
+            },
+            {
+              "func": "map",
+              "params": {
+                "func": "script",
+                "params": "article"
+              }
+            }
+          ],
+          "editors": [
+            {
+              "func": "download",
+              "params": {
+                "url": "https://api.bachngocsach.vip/api/recommended-stories?per_page=12&option=landing",
+                "type": "json"
+              }
+            },
+            {
+              "func": "map",
+              "params": {
+                "func": "script",
+                "params": "article"
+              }
+            }
+          ]
+        },
+        "transforms": [
+          {
+            "func": "html_node",
+            "params": {}
+          },
+          {
+            "func": "pick",
+            "params": {
+              "title": "B\u1ea1ch Ng\u1ecdc S\u00e1ch VIP",
+              "categories": [
+                {
+                  "func": "pick_list",
+                  "params": [
+                    [
+                      {
+                        "func": "pick",
+                        "params": {
+                          "title": [
+                            "Truy\u1ec7n m\u1edbi nh\u1ea5t"
+                          ],
+                          "items": [
+                            {
+                              "func": "script",
+                              "params": "category_new"
+                            }
+                          ],
+                          "display": [
+                            "card"
+                          ]
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "func": "pick",
+                        "params": {
+                          "title": [
+                            "Top Ng\u1ecdc Phi\u1ebfu (tu\u1ea7n)"
+                          ],
+                          "items": [
+                            {
+                              "func": "script",
+                              "params": "editors"
+                            }
+                          ],
+                          "display": [
+                            "card"
+                          ]
+                        }
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

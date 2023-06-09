@@ -89,7 +89,7 @@
                     },
                     {
                       "func": "first",
-                      "params": ")"
+                      "params": []
                     }
                   ],
                   "author": [
@@ -141,7 +141,7 @@
                 },
                 {
                   "func": "values",
-                  "params": ")"
+                  "params": []
                 },
                 {
                   "func": "script",
@@ -199,7 +199,7 @@
                     },
                     {
                       "func": "html_safe",
-                      "params": ")"
+                      "params": []
                     }
                   ],
                   "created_at": [
@@ -306,7 +306,7 @@
           },
           {
             "func": "values",
-            "params": ")"
+            "params": []
           },
           {
             "func": "filter",

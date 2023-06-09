@@ -3,6 +3,276 @@
     {
       "name": "list",
       "patterns": [
+        "https://bachngocsach\\.vip/truyen/[a-z0-9\\-]+/\\d+\\.html?$"
+      ],
+      "example": "https://bachngocsach.vip/truyen/pham-nhan-tien-gioi-thien-pntt-2/61.html",
+      "search": {
+        "url": "https://bachngocsach.vip/search",
+        "field": "ten"
+      },
+      "parser": {
+        "script": {
+          "latest": [
+            {
+              "func": "+",
+              "params": [
+                {
+                  "func": "+",
+                  "params": [
+                    "https://api.bachngocsach.vip/api/story/",
+                    {
+                      "func": "get",
+                      "params": "var.id"
+                    }
+                  ]
+                },
+                "/5-chapters-newest"
+              ]
+            },
+            {
+              "func": "download",
+              "params": {
+                "type": "json"
+              }
+            },
+            {
+              "func": "get",
+              "params": "value.data"
+            },
+            {
+              "func": "pick",
+              "params": {
+                "title": "Ch\u01b0\u01a1ng m\u1edbi",
+                "items": {
+                  "func": "map",
+                  "params": {
+                    "func": "pick",
+                    "params": {
+                      "title": {
+                        "func": "get",
+                        "params": "value.name"
+                      },
+                      "url": [
+                        {
+                          "func": "+",
+                          "params": [
+                            {
+                              "func": "+",
+                              "params": [
+                                {
+                                  "func": "+",
+                                  "params": [
+                                    {
+                                      "func": "+",
+                                      "params": [
+                                        "https://bachngocsach.vip/truyen/",
+                                        {
+                                          "func": "get",
+                                          "params": "value.slug"
+                                        }
+                                      ]
+                                    },
+                                    "/"
+                                  ]
+                                },
+                                {
+                                  "func": "get",
+                                  "params": "var.id"
+                                }
+                              ]
+                            },
+                            ".html"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "mucluc": [
+            {
+              "func": "pick",
+              "params": {
+                "title": [
+                  "M\u1ee5c l\u1ee5c"
+                ],
+                "items": [
+                  {
+                    "func": "html_select_all",
+                    "params": "#chuong-list li.chuong-item"
+                  },
+                  {
+                    "func": "map",
+                    "params": {
+                      "func": "pick",
+                      "params": {
+                        "title": [
+                          {
+                            "func": "html_select",
+                            "params": ".chuong-name@text"
+                          }
+                        ],
+                        "url": [
+                          {
+                            "func": "html_select",
+                            "params": ".chuong-link@href"
+                          },
+                          {
+                            "func": "url",
+                            "params": {}
+                          }
+                        ],
+                        "author": [
+                          {
+                            "func": "pick",
+                            "params": {
+                              "name": [
+                                {
+                                  "func": "html_select",
+                                  "params": ".chuong-poster@text"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "transforms": [
+          {
+            "func": "get",
+            "params": "context.source"
+          },
+          {
+            "func": "replace",
+            "params": {
+              "pattern": "^.+/(\\d+).html$",
+              "replacement": "$1"
+            }
+          },
+          {
+            "func": "set_var",
+            "params": "id"
+          },
+          {
+            "func": "+",
+            "params": [
+              "https://api.bachngocsach.vip/api/story/",
+              {
+                "func": "get",
+                "params": "var.id"
+              }
+            ]
+          },
+          {
+            "func": "download",
+            "params": {
+              "type": "json"
+            }
+          },
+          {
+            "func": "pick",
+            "params": {
+              "title": {
+                "func": "get",
+                "params": "value.name"
+              },
+              "image": {
+                "func": "get",
+                "params": "value.cover"
+              },
+              "intro": {
+                "func": "get",
+                "params": "value.desc"
+              },
+              "author": {
+                "func": "pick",
+                "params": {
+                  "name": {
+                    "func": "get",
+                    "params": "value.author.name"
+                  },
+                  "url": [
+                    {
+                      "func": "+",
+                      "params": [
+                        {
+                          "func": "+",
+                          "params": [
+                            {
+                              "func": "+",
+                              "params": [
+                                {
+                                  "func": "+",
+                                  "params": [
+                                    "https://bachngocsach.vip/tac-gia/",
+                                    {
+                                      "func": "get",
+                                      "params": "value.author.slug"
+                                    }
+                                  ]
+                                },
+                                "/"
+                              ]
+                            },
+                            {
+                              "func": "get",
+                              "params": "value.author.id"
+                            }
+                          ]
+                        },
+                        ".html"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "links": {
+                "func": "template",
+                "params": [
+                  {
+                    "text": "Danh s\u00e1ch ch\u01b0\u01a1ng",
+                    "url": {
+                      "func": "+",
+                      "params": [
+                        {
+                          "func": "+",
+                          "params": [
+                            "https://api.bachngocsach.vip/api/story/",
+                            {
+                              "func": "get",
+                              "params": "var.id"
+                            }
+                          ]
+                        },
+                        "/chapter?per_page=50&page=1&order_by=asc"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "categories": {
+                "func": "pick_list",
+                "params": {
+                  "func": "script",
+                  "params": "latest"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "list",
+      "patterns": [
         "https://bachngocsach\\.vip/?$"
       ],
       "example": "https://bachngocsach.vip",

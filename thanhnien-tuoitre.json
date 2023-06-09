@@ -54,7 +54,7 @@
                           },
                           {
                             "func": "url",
-                            "params": ")"
+                            "params": []
                           }
                         ],
                         "summary": [

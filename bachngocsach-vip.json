@@ -422,7 +422,7 @@
       "patterns": [
         "https://bachngocsach\\.vip/dich/[a-z0-9\\-]+/\\d+/[a-z0-9\\-]+/\\d+\\.html$"
       ],
-      "example": "https://bachngocsach.vip/dich/gia-toc-tu-tien-ta-lam-tran-toc-linh-thu/742/chuong-1-cuoc-song-hang-ngay-cua-mot-con-ran-1/338514.html",
+      "example": "https://bachngocsach.vip/dich/pham-nhan-tien-gioi-thien-pntt-2/742/luyen-khi-hau-ky/339058.html",
       "search": {
         "url": "https://bachngocsach.com.vn/reader/search",
         "field": "ten"
@@ -495,7 +495,8 @@
           {
             "func": "download",
             "params": {
-              "type": "json"
+              "type": "json",
+              "value_on_error": {}
             }
           },
           {

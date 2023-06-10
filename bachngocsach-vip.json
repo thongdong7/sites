@@ -65,7 +65,37 @@
                                     {
                                       "func": "+",
                                       "params": [
-                                        "https://bachngocsach.vip/truyen/",
+                                        {
+                                          "func": "+",
+                                          "params": [
+                                            {
+                                              "func": "+",
+                                              "params": [
+                                                {
+                                                  "func": "+",
+                                                  "params": [
+                                                    {
+                                                      "func": "+",
+                                                      "params": [
+                                                        "https://bachngocsach.vip/truyen/",
+                                                        {
+                                                          "func": "get",
+                                                          "params": "var.story.slug"
+                                                        }
+                                                      ]
+                                                    },
+                                                    "/"
+                                                  ]
+                                                },
+                                                {
+                                                  "func": "get",
+                                                  "params": "var.story.id"
+                                                }
+                                              ]
+                                            },
+                                            "/"
+                                          ]
+                                        },
                                         {
                                           "func": "get",
                                           "params": "value.slug"
@@ -77,7 +107,7 @@
                                 },
                                 {
                                   "func": "get",
-                                  "params": "var.id"
+                                  "params": "value.id"
                                 }
                               ]
                             },
@@ -88,59 +118,6 @@
                     }
                   }
                 }
-              }
-            }
-          ],
-          "mucluc": [
-            {
-              "func": "pick",
-              "params": {
-                "title": [
-                  "M\u1ee5c l\u1ee5c"
-                ],
-                "items": [
-                  {
-                    "func": "html_select_all",
-                    "params": "#chuong-list li.chuong-item"
-                  },
-                  {
-                    "func": "map",
-                    "params": {
-                      "func": "pick",
-                      "params": {
-                        "title": [
-                          {
-                            "func": "html_select",
-                            "params": ".chuong-name@text"
-                          }
-                        ],
-                        "url": [
-                          {
-                            "func": "html_select",
-                            "params": ".chuong-link@href"
-                          },
-                          {
-                            "func": "url",
-                            "params": {}
-                          }
-                        ],
-                        "author": [
-                          {
-                            "func": "pick",
-                            "params": {
-                              "name": [
-                                {
-                                  "func": "html_select",
-                                  "params": ".chuong-poster@text"
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ]
               }
             }
           ]
@@ -182,6 +159,16 @@
             "params": {
               "type": "json"
             }
+          },
+          {
+            "func": "set_var",
+            "params": [
+              "story",
+              {
+                "func": "get",
+                "params": "value"
+              }
+            ]
           },
           {
             "func": "pick",
@@ -423,10 +410,6 @@
         "https://bachngocsach\\.vip/dich/[a-z0-9\\-]+/\\d+/[a-z0-9\\-]+/\\d+\\.html$"
       ],
       "example": "https://bachngocsach.vip/dich/pham-nhan-tien-gioi-thien-pntt-2/742/luyen-khi-hau-ky/339058.html",
-      "search": {
-        "url": "https://bachngocsach.com.vn/reader/search",
-        "field": "ten"
-      },
       "parser": {
         "transforms": [
           {

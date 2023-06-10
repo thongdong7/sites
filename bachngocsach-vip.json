@@ -159,7 +159,13 @@
           },
           {
             "func": "set_var",
-            "params": "id"
+            "params": [
+              "id",
+              {
+                "func": "get",
+                "params": "value"
+              }
+            ]
           },
           {
             "func": "+",
@@ -265,6 +271,454 @@
                   "params": "latest"
                 }
               }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "list",
+      "patterns": [
+        "^https://api\\.bachngocsach\\.vip/api/story/\\d+/chapter"
+      ],
+      "example": "https://api.bachngocsach.vip/api/story/742/chapter?per_page=50&page=1&order_by=asc",
+      "parser": {
+        "transforms": [
+          {
+            "func": "get",
+            "params": "context.source"
+          },
+          {
+            "func": "download",
+            "params": {
+              "type": "json"
+            }
+          },
+          {
+            "func": "pick",
+            "params": {
+              "links": [
+                {
+                  "func": "template",
+                  "params": [
+                    {
+                      "text": "Trang k\u1ebf",
+                      "url": {
+                        "func": "get",
+                        "params": "value.chapters.next_page_url"
+                      }
+                    },
+                    {
+                      "text": {
+                        "func": "get",
+                        "params": "value.chapters.last_page"
+                      },
+                      "url": {
+                        "func": "get",
+                        "params": "value.chapters.last_page_url"
+                      }
+                    },
+                    {
+                      "text": {
+                        "func": "get",
+                        "params": "value.chapters.from"
+                      },
+                      "url": {
+                        "func": "get",
+                        "params": "value.chapters.first_page_url"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "func": "filter",
+                  "params": {
+                    "func": "!=",
+                    "params": [
+                      {
+                        "func": "get",
+                        "params": "value.url"
+                      },
+                      null
+                    ]
+                  }
+                },
+                {
+                  "func": "uniq_by_field",
+                  "params": "url"
+                }
+              ],
+              "items": [
+                {
+                  "func": "get",
+                  "params": "value.chapters.data"
+                },
+                {
+                  "func": "map",
+                  "params": {
+                    "func": "pick",
+                    "params": {
+                      "title": {
+                        "func": "get",
+                        "params": "value.name"
+                      },
+                      "url": {
+                        "func": "+",
+                        "params": [
+                          {
+                            "func": "+",
+                            "params": [
+                              {
+                                "func": "+",
+                                "params": [
+                                  {
+                                    "func": "+",
+                                    "params": [
+                                      {
+                                        "func": "+",
+                                        "params": [
+                                          {
+                                            "func": "+",
+                                            "params": [
+                                              "https://bachngocsach.vip/dich/pham-nhan-tien-gioi-thien-pntt-2/",
+                                              {
+                                                "func": "get",
+                                                "params": "value.story_id"
+                                              }
+                                            ]
+                                          },
+                                          "/"
+                                        ]
+                                      },
+                                      {
+                                        "func": "get",
+                                        "params": "value.slug"
+                                      }
+                                    ]
+                                  },
+                                  "/"
+                                ]
+                              },
+                              {
+                                "func": "get",
+                                "params": "value.id"
+                              }
+                            ]
+                          },
+                          ".html"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "view",
+      "patterns": [
+        "https://bachngocsach\\.vip/dich/[a-z0-9\\-]+/\\d+/[a-z0-9\\-]+/\\d+\\.html$"
+      ],
+      "example": "https://bachngocsach.vip/dich/gia-toc-tu-tien-ta-lam-tran-toc-linh-thu/742/chuong-1-cuoc-song-hang-ngay-cua-mot-con-ran-1/338514.html",
+      "search": {
+        "url": "https://bachngocsach.com.vn/reader/search",
+        "field": "ten"
+      },
+      "parser": {
+        "transforms": [
+          {
+            "func": "get",
+            "params": "context.source"
+          },
+          {
+            "func": "replace",
+            "params": {
+              "pattern": "^.+/(\\d+)\\.html$",
+              "replacement": "$1"
+            }
+          },
+          {
+            "func": "set_var",
+            "params": [
+              "chapter_id",
+              {
+                "func": "get",
+                "params": "value"
+              }
+            ]
+          },
+          {
+            "func": "+",
+            "params": [
+              "https://api.bachngocsach.vip/api/v1/chapter/",
+              {
+                "func": "get",
+                "params": "var.chapter_id"
+              }
+            ]
+          },
+          {
+            "func": "download",
+            "params": {
+              "type": "json"
+            }
+          },
+          {
+            "func": "set_var",
+            "params": [
+              "chapter",
+              {
+                "func": "get",
+                "params": "value.chapter"
+              }
+            ]
+          },
+          {
+            "func": "+",
+            "params": [
+              {
+                "func": "+",
+                "params": [
+                  "https://api.bachngocsach.vip/api/nav-chapter/",
+                  {
+                    "func": "get",
+                    "params": "var.chapter_id"
+                  }
+                ]
+              },
+              "?page=next"
+            ]
+          },
+          {
+            "func": "download",
+            "params": {
+              "type": "json"
+            }
+          },
+          {
+            "func": "set_var",
+            "params": [
+              "next_chapter",
+              {
+                "func": "get",
+                "params": "value"
+              }
+            ]
+          },
+          {
+            "func": "+",
+            "params": [
+              {
+                "func": "+",
+                "params": [
+                  "https://api.bachngocsach.vip/api/nav-chapter/",
+                  {
+                    "func": "get",
+                    "params": "var.chapter_id"
+                  }
+                ]
+              },
+              "?page=pre"
+            ]
+          },
+          {
+            "func": "download",
+            "params": {
+              "type": "json"
+            }
+          },
+          {
+            "func": "set_var",
+            "params": [
+              "pre_chapter",
+              {
+                "func": "get",
+                "params": "value"
+              }
+            ]
+          },
+          {
+            "func": "get",
+            "params": "var.chapter"
+          },
+          {
+            "func": "pick",
+            "params": {
+              "title": {
+                "func": "get",
+                "params": "value.name"
+              },
+              "content": [
+                {
+                  "func": "get",
+                  "params": "value.web_content"
+                },
+                {
+                  "func": "replaceDict",
+                  "params": {
+                    "k": "h",
+                    "j": "n",
+                    "v": "t",
+                    "h": "m",
+                    "x": "c",
+                    "n": "g",
+                    "s": "r",
+                    "`": "k",
+                    "m": "p",
+                    "d": "l",
+                    "}": "v",
+                    "t": "s",
+                    "|": "b",
+                    "c": "d",
+                    "g": "x"
+                  }
+                }
+              ],
+              "footer_links": [
+                {
+                  "func": "template",
+                  "params": [
+                    {
+                      "text": {
+                        "func": "get",
+                        "params": "var.pre_chapter.name"
+                      },
+                      "url": {
+                        "func": "&&",
+                        "params": [
+                          {
+                            "func": "get",
+                            "params": "var.pre_chapter.id"
+                          },
+                          {
+                            "func": "+",
+                            "params": [
+                              {
+                                "func": "+",
+                                "params": [
+                                  {
+                                    "func": "+",
+                                    "params": [
+                                      {
+                                        "func": "+",
+                                        "params": [
+                                          {
+                                            "func": "+",
+                                            "params": [
+                                              {
+                                                "func": "+",
+                                                "params": [
+                                                  "https://bachngocsach.vip/dich/pham-nhan-tien-gioi-thien-pntt-2/",
+                                                  {
+                                                    "func": "get",
+                                                    "params": "var.pre_chapter.story_id"
+                                                  }
+                                                ]
+                                              },
+                                              "/"
+                                            ]
+                                          },
+                                          {
+                                            "func": "get",
+                                            "params": "var.pre_chapter.slug"
+                                          }
+                                        ]
+                                      },
+                                      "/"
+                                    ]
+                                  },
+                                  {
+                                    "func": "get",
+                                    "params": "var.pre_chapter.id"
+                                  }
+                                ]
+                              },
+                              ".html"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "text": {
+                        "func": "get",
+                        "params": "var.next_chapter.name"
+                      },
+                      "url": {
+                        "func": "&&",
+                        "params": [
+                          {
+                            "func": "get",
+                            "params": "var.next_chapter.id"
+                          },
+                          {
+                            "func": "+",
+                            "params": [
+                              {
+                                "func": "+",
+                                "params": [
+                                  {
+                                    "func": "+",
+                                    "params": [
+                                      {
+                                        "func": "+",
+                                        "params": [
+                                          {
+                                            "func": "+",
+                                            "params": [
+                                              {
+                                                "func": "+",
+                                                "params": [
+                                                  "https://bachngocsach.vip/dich/pham-nhan-tien-gioi-thien-pntt-2/",
+                                                  {
+                                                    "func": "get",
+                                                    "params": "var.next_chapter.story_id"
+                                                  }
+                                                ]
+                                              },
+                                              "/"
+                                            ]
+                                          },
+                                          {
+                                            "func": "get",
+                                            "params": "var.next_chapter.slug"
+                                          }
+                                        ]
+                                      },
+                                      "/"
+                                    ]
+                                  },
+                                  {
+                                    "func": "get",
+                                    "params": "var.next_chapter.id"
+                                  }
+                                ]
+                              },
+                              ".html"
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "func": "filter",
+                  "params": {
+                    "func": "!=",
+                    "params": [
+                      {
+                        "func": "get",
+                        "params": "value.url"
+                      },
+                      null
+                    ]
+                  }
+                }
+              ]
             }
           }
         ]

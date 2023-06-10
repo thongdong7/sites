@@ -77,7 +77,7 @@
                                                     {
                                                       "func": "+",
                                                       "params": [
-                                                        "https://bachngocsach.vip/truyen/",
+                                                        "https://bachngocsach.vip/dich/",
                                                         {
                                                           "func": "get",
                                                           "params": "var.story.slug"

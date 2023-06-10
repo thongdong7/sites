@@ -575,6 +575,13 @@
                     "c": "d",
                     "g": "x"
                   }
+                },
+                {
+                  "func": "replace",
+                  "params": {
+                    "pattern": "\n",
+                    "replacement": "<br/>"
+                  }
                 }
               ],
               "footer_links": [

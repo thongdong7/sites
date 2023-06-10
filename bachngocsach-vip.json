@@ -120,6 +120,120 @@
                 }
               }
             }
+          ],
+          "categories": [
+            {
+              "func": "get",
+              "params": "var.story.categories"
+            },
+            {
+              "func": "set_var",
+              "params": [
+                "categories",
+                {
+                  "func": "map",
+                  "params": {
+                    "func": "pick",
+                    "params": {
+                      "text": {
+                        "func": "get",
+                        "params": "value.name"
+                      },
+                      "url": [
+                        {
+                          "func": "+",
+                          "params": [
+                            {
+                              "func": "+",
+                              "params": [
+                                {
+                                  "func": "+",
+                                  "params": [
+                                    {
+                                      "func": "+",
+                                      "params": [
+                                        "https://bachngocsach.vip/the-loai/",
+                                        {
+                                          "func": "get",
+                                          "params": "value.slug"
+                                        }
+                                      ]
+                                    },
+                                    "/"
+                                  ]
+                                },
+                                {
+                                  "func": "get",
+                                  "params": "value.id"
+                                }
+                              ]
+                            },
+                            ".html"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "tags": [
+            {
+              "func": "get",
+              "params": "var.story.tags"
+            },
+            {
+              "func": "set_var",
+              "params": [
+                "tags",
+                {
+                  "func": "map",
+                  "params": {
+                    "func": "pick",
+                    "params": {
+                      "text": {
+                        "func": "get",
+                        "params": "value.name"
+                      },
+                      "url": [
+                        {
+                          "func": "+",
+                          "params": [
+                            {
+                              "func": "+",
+                              "params": [
+                                {
+                                  "func": "+",
+                                  "params": [
+                                    {
+                                      "func": "+",
+                                      "params": [
+                                        "https://bachngocsach.vip/tag/",
+                                        {
+                                          "func": "get",
+                                          "params": "value.slug"
+                                        }
+                                      ]
+                                    },
+                                    "/"
+                                  ]
+                                },
+                                {
+                                  "func": "get",
+                                  "params": "value.id"
+                                }
+                              ]
+                            },
+                            ".html"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
           ]
         },
         "transforms": [
@@ -169,6 +283,18 @@
                 "params": "value"
               }
             ]
+          },
+          {
+            "func": "script",
+            "params": "categories"
+          },
+          {
+            "func": "script",
+            "params": "tags"
+          },
+          {
+            "func": "get",
+            "params": "var.story"
           },
           {
             "func": "pick",
@@ -227,6 +353,21 @@
                   ]
                 }
               },
+              "tags": [
+                {
+                  "func": "concat",
+                  "params": [
+                    {
+                      "func": "get",
+                      "params": "var.categories"
+                    },
+                    {
+                      "func": "get",
+                      "params": "var.tags"
+                    }
+                  ]
+                }
+              ],
               "links": {
                 "func": "template",
                 "params": [
